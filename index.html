@@ -3,19 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire Visibilité</title>
+    <title>Questionnaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input {
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function toggleCombienField() {
+            var places = document.getElementById("places").value;
+            var combienField = document.getElementById("combien-container");
+            if (places === "oui") {
+                combienField.classList.remove("hidden");
+            } else {
+                combienField.classList.add("hidden");
+                document.getElementById("combien").value = ""; // Réinitialiser la valeur
+            }
+        }
+    </script>
 </head>
 <body>
-    <h2>Formulaire de Visibilité</h2>
-    <form id="visibilityForm">
-        <label>Logo :</label>
-        <select name="logo">
+
+    <h2>Questionnaire</h2>
+
+    <form action="https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0" 
+          method="POST">
+
+        <!-- Question 1 -->
+        <label for="logo">Logo ?</label>
+        <select name="logo" id="logo" required>
+            <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
             <option value="non">Non</option>
-            <option value="trop tôt">Trop tôt</option>
-        </select><br><br>
-        
+            <option value="trop_tot">Trop tôt</option>
+        </select>
+
+        <!-- Question 2 -->
+        <label for="justi">Justi ?</label>
+        <select name="justi" id="justi" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop_tot">Trop tôt</option>
+        </select>
+
+        <!-- Question 3 -->
+        <label for="tag_rs">Tag RS ?</label>
+        <select name="tag_rs" id="tag_rs" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop_tot">Trop tôt</option>
+        </select>
+
+        <!-- Question 4 -->
+        <label for="plan_com">Plan com ?</label>
+        <select name="plan_com" id="plan_com" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop_tot">Trop tôt</option>
+        </select>
+
+        <!-- Question 5 -->
+        <label for="mention">Mention ?</label>
+        <select name="mention" id="mention" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="pas_itw">Pas d'itw</option>
+        </select>
+
+        <!-- Question 6 -->
+        <label for="places">Places ?</label>
+        <select name="places" id="places" required onchange="toggleCombienField()">
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop_tot">Trop tôt</option>
+        </select>
+
+        <!-- Question 7 : Combien ? (S'affiche seulement si "Places ?" = "Oui") -->
+        <div id="combien-container" class="hidden">
+            <label for="combien">Combien ?</label>
+            <input type="number" name="combien" id="combien" min="0">
+        </div>
+
+        <!-- Bouton d'envoi -->
         <button type="submit">Envoyer</button>
+
     </form>
+
 </body>
 </html>
