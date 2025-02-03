@@ -1,82 +1,65 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionnaire Visibilité</title>
 </head>
 <body>
-    <h1>Questionnaire Visibilité</h1>
-    
-    <form id="questionnaireForm">
-        <label for="logo">Avez-vous chargé le logo ?</label>
-        <select id="logo">
+    <h2>Formulaire de Visibilité</h2>
+    <form id="visibilityForm">
+        <label>Logo :</label>
+        <select name="logo">
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
-        </select>
-        <br><br>
+        </select><br><br>
 
-        <label for="justif">Avez-vous envoyé les justificatifs ?</label>
-        <select id="justif">
+        <label>Justificatif envoyé ? :</label>
+        <select name="justificatif">
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
-        </select>
-        <br><br>
+        </select><br><br>
 
-        <label for="places">Donnez-vous des places ?</label>
-        <select id="places" onchange="toggleCombien()">
+        <label>Places offertes ? :</label>
+        <select name="places">
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
-        </select>
-        <br><br>
+        </select><br><br>
 
-        <div id="combienContainer" style="display: none;">
-            <label for="combien">Combien ?</label>
-            <input type="number" id="combien" min="0">
-            <br><br>
-        </div>
+        <label>Combien ? :</label>
+        <input type="number" name="combien"><br><br>
 
-        <button type="button" onclick="envoyerReponse()">Envoyer</button>
+        <button type="submit">Envoyer</button>
     </form>
 
-    <p id="message"></p>
-
     <script>
-        function toggleCombien() {
-            let places = document.getElementById("places").value;
-            let combienContainer = document.getElementById("combienContainer");
-            combienContainer.style.display = (places === "oui") ? "block" : "none";
-        }
+        document.getElementById("visibilityForm").addEventListener("submit", function(event) {
+            event.preventDefault();
 
-        function envoyerReponse() {
-            let powerAutomateUrl = "https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01"; // Remplace avec l'URL copiée depuis Power Automate
-
-            let data = {
-                logo: document.getElementById("logo").value,
-                justif: document.getElementById("justif").value,
-                places: document.getElementById("places").value,
-                combien: document.getElementById("places").value === "oui" ? document.getElementById("combien").value : "0"
+            let formData = {
+                logo: document.querySelector('[name="logo"]').value,
+                justificatif: document.querySelector('[name="justificatif"]').value,
+                places: document.querySelector('[name="places"]').value,
+                combien: document.querySelector('[name="combien"]').value
             };
 
-            fetch(powerAutomateUrl, {
+            fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById("message").innerText = "✅ Réponse envoyée avec succès !";
+                alert("Formulaire envoyé avec succès !");
             })
             .catch(error => {
-                document.getElementById("message").innerText = "❌ Erreur lors de l'envoi.";
-                console.error("Erreur:", error);
+                console.error("Erreur lors de l'envoi :", error);
+                alert("Erreur lors de l'envoi.");
             });
-        }
+        });
     </script>
 </body>
 </html>
