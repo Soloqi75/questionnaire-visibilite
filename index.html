@@ -42,7 +42,7 @@
         function toggleCombienField() {
             var places = document.getElementById("places").value;
             var combienField = document.getElementById("combien-container");
-            if (places === "oui") {
+            if (places === "Oui") {
                 combienField.classList.remove("hidden");
             } else {
                 combienField.classList.add("hidden");
@@ -101,49 +101,49 @@
         <label for="logo">Logo ?</label>
         <select name="logo" id="logo" required>
             <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop tôt">Trop tôt</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
         <label for="justi">Justi ?</label>
         <select name="justi" id="justi" required>
             <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop tôt">Trop tôt</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
         <label for="tag_rs">Tag RS ?</label>
         <select name="tag_rs" id="tag_rs" required>
             <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop tôt">Trop tôt</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
         <label for="plan_com">Plan com ?</label>
         <select name="plan_com" id="plan_com" required>
             <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop tôt">Trop tôt</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
         <label for="mention">Mention ?</label>
         <select name="mention" id="mention" required>
             <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="pas_itw">Pas d'itw</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Pas encore d'interview">Pas encore d'interview</option>
         </select><br><br>
 
         <label for="places">Places ?</label>
         <select name="places" id="places" required onchange="toggleCombienField()">
             <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop tôt">Trop tôt</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
         <div id="combien-container" class="hidden">
