@@ -56,7 +56,7 @@
             var jsonData = {};
             formData.forEach((value, key) => { jsonData[key] = value; });
 
-            fetch("TON_WEBHOOK_POWER_AUTOMATE", {
+            fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(jsonData)
