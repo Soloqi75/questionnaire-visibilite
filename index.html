@@ -3,70 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire de Visibilité</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        label, select, input { display: block; margin: 10px 0; }
-        #combienGroup { display: none; }
-    </style>
+    <title>Questionnaire Visibilité</title>
 </head>
 <body>
-
-    <h2>Questionnaire de Visibilité</h2>
-
+    <h1>Questionnaire Visibilité</h1>
+    
     <form id="questionnaireForm">
-        <label>Avez-vous chargé le logo ?</label>
-        <select id="logo" name="logo">
+        <label for="logo">Avez-vous chargé le logo ?</label>
+        <select id="logo">
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
         </select>
+        <br><br>
 
-        <label>Avez-vous envoyé à la Région les justificatifs ?</label>
-        <select id="justificatifs" name="justificatifs">
+        <label for="justif">Avez-vous envoyé les justificatifs ?</label>
+        <select id="justif">
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
         </select>
+        <br><br>
 
-        <label>Donnez-vous des places ?</label>
-        <select id="places" name="places" onchange="toggleCombienField()">
+        <label for="places">Donnez-vous des places ?</label>
+        <select id="places" onchange="toggleCombien()">
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
         </select>
+        <br><br>
 
-        <div id="combienGroup">
-            <label>Combien ?</label>
-            <input type="number" id="combien" name="combien" min="0">
+        <div id="combienContainer" style="display: none;">
+            <label for="combien">Combien ?</label>
+            <input type="number" id="combien" min="0">
+            <br><br>
         </div>
 
-        <button type="submit">Envoyer</button>
+        <button type="button" onclick="envoyerReponse()">Envoyer</button>
     </form>
 
+    <p id="message"></p>
+
     <script>
-        function toggleCombienField() {
-            var places = document.getElementById("places").value;
-            document.getElementById("combienGroup").style.display = (places === "oui") ? "block" : "none";
+        function toggleCombien() {
+            let places = document.getElementById("places").value;
+            let combienContainer = document.getElementById("combienContainer");
+            combienContainer.style.display = (places === "oui") ? "block" : "none";
         }
 
-        document.getElementById("questionnaireForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            var jsonData = {};
-            formData.forEach((value, key) => { jsonData[key] = value; });
+        function envoyerReponse() {
+            let powerAutomateUrl = "https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01"; // Remplace avec l'URL copiée depuis Power Automate
 
-            fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01", {
+            let data = {
+                logo: document.getElementById("logo").value,
+                justif: document.getElementById("justif").value,
+                places: document.getElementById("places").value,
+                combien: document.getElementById("places").value === "oui" ? document.getElementById("combien").value : "0"
+            };
+
+            fetch(powerAutomateUrl, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(jsonData)
-            }).then(response => {
-                alert("Formulaire envoyé avec succès !");
-            }).catch(error => {
-                alert("Erreur lors de l'envoi !");
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").innerText = "✅ Réponse envoyée avec succès !";
+            })
+            .catch(error => {
+                document.getElementById("message").innerText = "❌ Erreur lors de l'envoi.";
+                console.error("Erreur:", error);
             });
-        });
+        }
     </script>
-
 </body>
 </html>
