@@ -33,7 +33,6 @@
         }
     </style>
     <script>
-        // Fonction pour afficher/masquer le champ "Combien ?" en fonction de la réponse à "Places ?"
         function toggleCombienField() {
             var places = document.getElementById("places").value;
             var combienField = document.getElementById("combien-container");
@@ -50,10 +49,13 @@
                 event.preventDefault(); // Empêcher l'envoi par défaut
 
                 let formData = {
-                    logo: document.querySelector('[name="logo"]').value,
-                    justificatif: document.querySelector('[name="justificatif"]').value,
-                    places: document.querySelector('[name="places"]').value,
-                    combien: document.querySelector('[name="combien"]').value || null // Null si vide
+                    logo: document.getElementById("logo").value,
+                    justi: document.getElementById("justi").value,
+                    tag_rs: document.getElementById("tag_rs").value,
+                    plan_com: document.getElementById("plan_com").value,
+                    mention: document.getElementById("mention").value,
+                    places: document.getElementById("places").value,
+                    combien: document.getElementById("combien").value || null // Null si vide
                 };
 
                 fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
@@ -83,23 +85,47 @@
     <h2>Formulaire de Visibilité</h2>
 
     <form id="visibilityForm">
-        <label>Logo :</label>
-        <select name="logo" required>
+        <label for="logo">Logo ?</label>
+        <select name="logo" id="logo" required>
             <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
         </select><br><br>
 
-        <label>Justificatif envoyé ? :</label>
-        <select name="justificatif" required>
+        <label for="justi">Justi ?</label>
+        <select name="justi" id="justi" required>
             <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
             <option value="non">Non</option>
             <option value="trop tôt">Trop tôt</option>
         </select><br><br>
 
-        <label>Places offertes ? :</label>
+        <label for="tag_rs">Tag RS ?</label>
+        <select name="tag_rs" id="tag_rs" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop tôt">Trop tôt</option>
+        </select><br><br>
+
+        <label for="plan_com">Plan com ?</label>
+        <select name="plan_com" id="plan_com" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop tôt">Trop tôt</option>
+        </select><br><br>
+
+        <label for="mention">Mention ?</label>
+        <select name="mention" id="mention" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="pas_itw">Pas d'itw</option>
+        </select><br><br>
+
+        <label for="places">Places ?</label>
         <select name="places" id="places" required onchange="toggleCombienField()">
             <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
@@ -108,7 +134,7 @@
         </select><br><br>
 
         <div id="combien-container" class="hidden">
-            <label>Combien ? :</label>
+            <label for="combien">Combien ?</label>
             <input type="number" name="combien" id="combien" min="0">
         </div><br>
 
