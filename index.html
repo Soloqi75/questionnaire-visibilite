@@ -33,6 +33,12 @@
         }
     </style>
     <script>
+        // Fonction pour récupérer l'e-mail dans l'URL
+        function getEmailFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('email') || ''; // Récupère l'email ou renvoie une chaîne vide
+        }
+
         function toggleCombienField() {
             var places = document.getElementById("places").value;
             var combienField = document.getElementById("combien-container");
@@ -45,17 +51,21 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
+            // Récupère l'e-mail et le met dans le champ
+            document.getElementById("email").value = getEmailFromURL();
+
             document.getElementById("visibilityForm").addEventListener("submit", function(event) {
                 event.preventDefault(); // Empêcher l'envoi par défaut
 
                 let formData = {
+                    email: document.getElementById("email").value, // Ajout de l'email
                     logo: document.getElementById("logo").value,
-                    justificatif: document.getElementById("justi").value, // Correction ici
+                    justificatif: document.getElementById("justi").value,
                     tag_rs: document.getElementById("tag_rs").value,
                     plan_com: document.getElementById("plan_com").value,
                     mention: document.getElementById("mention").value,
                     places: document.getElementById("places").value,
-                    combien: document.getElementById("combien").value || "" // Correction ici
+                    combien: document.getElementById("combien").value || "" // Null si vide
                 };
 
                 fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
@@ -85,6 +95,9 @@
     <h2>Formulaire de Visibilité</h2>
 
     <form id="visibilityForm">
+        <label for="email">Votre Email :</label>
+        <input type="email" name="email" id="email" readonly required><br><br>
+
         <label for="logo">Logo ?</label>
         <select name="logo" id="logo" required>
             <option value="">-- Sélectionner --</option>
