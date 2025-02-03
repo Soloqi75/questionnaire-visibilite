@@ -43,16 +43,43 @@
                 document.getElementById("combien").value = ""; // Réinitialiser la valeur
             }
         }
+
+        async function envoyerReponses(event) {
+            event.preventDefault(); // Empêche l'envoi classique du formulaire
+            
+            // Récupération des valeurs
+            let formData = {
+                logo: document.getElementById("logo").value,
+                justi: document.getElementById("justi").value,
+                tag_rs: document.getElementById("tag_rs").value,
+                plan_com: document.getElementById("plan_com").value,
+                mention: document.getElementById("mention").value,
+                places: document.getElementById("places").value,
+                combien: document.getElementById("combien").value || null // Null si vide
+            };
+
+            // Envoi des données en JSON
+            let response = await fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                alert("Réponses envoyées avec succès !");
+            } else {
+                alert("Erreur lors de l'envoi des réponses.");
+            }
+        }
     </script>
 </head>
 <body>
 
     <h2>Questionnaire</h2>
 
-    <form action="https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0" 
-          method="POST">
-
-        <!-- Question 1 -->
+    <form onsubmit="envoyerReponses(event)">
         <label for="logo">Logo ?</label>
         <select name="logo" id="logo" required>
             <option value="">-- Sélectionner --</option>
@@ -61,7 +88,6 @@
             <option value="trop_tot">Trop tôt</option>
         </select>
 
-        <!-- Question 2 -->
         <label for="justi">Justi ?</label>
         <select name="justi" id="justi" required>
             <option value="">-- Sélectionner --</option>
@@ -70,7 +96,6 @@
             <option value="trop_tot">Trop tôt</option>
         </select>
 
-        <!-- Question 3 -->
         <label for="tag_rs">Tag RS ?</label>
         <select name="tag_rs" id="tag_rs" required>
             <option value="">-- Sélectionner --</option>
@@ -79,7 +104,6 @@
             <option value="trop_tot">Trop tôt</option>
         </select>
 
-        <!-- Question 4 -->
         <label for="plan_com">Plan com ?</label>
         <select name="plan_com" id="plan_com" required>
             <option value="">-- Sélectionner --</option>
@@ -88,7 +112,6 @@
             <option value="trop_tot">Trop tôt</option>
         </select>
 
-        <!-- Question 5 -->
         <label for="mention">Mention ?</label>
         <select name="mention" id="mention" required>
             <option value="">-- Sélectionner --</option>
@@ -97,7 +120,6 @@
             <option value="pas_itw">Pas d'itw</option>
         </select>
 
-        <!-- Question 6 -->
         <label for="places">Places ?</label>
         <select name="places" id="places" required onchange="toggleCombienField()">
             <option value="">-- Sélectionner --</option>
@@ -106,15 +128,12 @@
             <option value="trop_tot">Trop tôt</option>
         </select>
 
-        <!-- Question 7 : Combien ? (S'affiche seulement si "Places ?" = "Oui") -->
         <div id="combien-container" class="hidden">
             <label for="combien">Combien ?</label>
             <input type="number" name="combien" id="combien" min="0">
         </div>
 
-        <!-- Bouton d'envoi -->
         <button type="submit">Envoyer</button>
-
     </form>
 
 </body>
