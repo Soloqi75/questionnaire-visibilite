@@ -1,34 +1,21 @@
-<script>
-    document.getElementById("visibilityForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        let formData = {
-            logo: document.querySelector('[name="logo"]').value,
-            justificatif: document.querySelector('[name="justificatif"]').value,
-            places: document.querySelector('[name="places"]').value,
-            combien: document.querySelector('[name="combien"]').value
-        };
-
-        fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erreur HTTP ${response.status}`);
-            }
-            return response.json(); // Essayer de lire la réponse JSON
-        })
-        .then(data => {
-            alert("✅ Formulaire envoyé avec succès !");
-            console.log("Réponse du serveur :", data);
-        })
-        .catch(error => {
-            console.error("❌ Erreur lors de l'envoi :", error);
-            alert("✅ Formulaire envoyé avec succès ! (Même en cas d'erreur)");
-        });
-    });
-</script>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire Visibilité</title>
+</head>
+<body>
+    <h2>Formulaire de Visibilité</h2>
+    <form id="visibilityForm">
+        <label>Logo :</label>
+        <select name="logo">
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+            <option value="trop tôt">Trop tôt</option>
+        </select><br><br>
+        
+        <button type="submit">Envoyer</button>
+    </form>
+</body>
+</html>
