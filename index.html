@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire</title>
+    <title>Questionnaire Visibilité</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,6 +33,7 @@
         }
     </style>
     <script>
+        // Fonction pour afficher/masquer le champ "Combien ?" en fonction de la réponse à "Places ?"
         function toggleCombienField() {
             var places = document.getElementById("places").value;
             var combienField = document.getElementById("combien-container");
@@ -40,98 +41,76 @@
                 combienField.classList.remove("hidden");
             } else {
                 combienField.classList.add("hidden");
-                document.getElementById("combien").value = ""; // Réinitialiser la valeur
+                document.getElementById("combien").value = ""; // Réinitialisation
             }
         }
 
-        async function envoyerReponses(event) {
-            event.preventDefault(); // Empêche l'envoi classique du formulaire
-            
-            // Récupération des valeurs
-            let formData = {
-                logo: document.getElementById("logo").value,
-                justi: document.getElementById("justi").value,
-                tag_rs: document.getElementById("tag_rs").value,
-                plan_com: document.getElementById("plan_com").value,
-                mention: document.getElementById("mention").value,
-                places: document.getElementById("places").value,
-                combien: document.getElementById("combien").value || null // Null si vide
-            };
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("visibilityForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Empêcher l'envoi par défaut
 
-            // Envoi des données en JSON
-            let response = await fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
+                let formData = {
+                    logo: document.querySelector('[name="logo"]').value,
+                    justificatif: document.querySelector('[name="justificatif"]').value,
+                    places: document.querySelector('[name="places"]').value,
+                    combien: document.querySelector('[name="combien"]').value || null // Null si vide
+                };
+
+                fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Formulaire envoyé avec succès !");
+                    } else {
+                        alert("Erreur lors de l'envoi.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'envoi :", error);
+                    alert("Erreur lors de l'envoi.");
+                });
             });
-
-            if (response.ok) {
-                alert("Réponses envoyées avec succès !");
-            } else {
-                alert("Erreur lors de l'envoi des réponses.");
-            }
-        }
+        });
     </script>
 </head>
 <body>
 
-    <h2>Questionnaire</h2>
+    <h2>Formulaire de Visibilité</h2>
 
-    <form onsubmit="envoyerReponses(event)">
-        <label for="logo">Logo ?</label>
-        <select name="logo" id="logo" required>
+    <form id="visibilityForm">
+        <label>Logo :</label>
+        <select name="logo" required>
             <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
             <option value="non">Non</option>
-            <option value="trop_tot">Trop tôt</option>
-        </select>
+            <option value="trop tôt">Trop tôt</option>
+        </select><br><br>
 
-        <label for="justi">Justi ?</label>
-        <select name="justi" id="justi" required>
+        <label>Justificatif envoyé ? :</label>
+        <select name="justificatif" required>
             <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
             <option value="non">Non</option>
-            <option value="trop_tot">Trop tôt</option>
-        </select>
+            <option value="trop tôt">Trop tôt</option>
+        </select><br><br>
 
-        <label for="tag_rs">Tag RS ?</label>
-        <select name="tag_rs" id="tag_rs" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop_tot">Trop tôt</option>
-        </select>
-
-        <label for="plan_com">Plan com ?</label>
-        <select name="plan_com" id="plan_com" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="trop_tot">Trop tôt</option>
-        </select>
-
-        <label for="mention">Mention ?</label>
-        <select name="mention" id="mention" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="oui">Oui</option>
-            <option value="non">Non</option>
-            <option value="pas_itw">Pas d'itw</option>
-        </select>
-
-        <label for="places">Places ?</label>
+        <label>Places offertes ? :</label>
         <select name="places" id="places" required onchange="toggleCombienField()">
             <option value="">-- Sélectionner --</option>
             <option value="oui">Oui</option>
             <option value="non">Non</option>
-            <option value="trop_tot">Trop tôt</option>
-        </select>
+            <option value="trop tôt">Trop tôt</option>
+        </select><br><br>
 
         <div id="combien-container" class="hidden">
-            <label for="combien">Combien ?</label>
+            <label>Combien ? :</label>
             <input type="number" name="combien" id="combien" min="0">
-        </div>
+        </div><br>
 
         <button type="submit">Envoyer</button>
     </form>
