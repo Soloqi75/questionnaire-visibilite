@@ -48,6 +48,17 @@
             };
         }
 
+        function toggleCombienField() {
+            var places = document.getElementById("places").value;
+            var combienField = document.getElementById("combien-container");
+            if (places === "Oui") {
+                combienField.classList.remove("hidden");
+            } else {
+                combienField.classList.add("hidden");
+                document.getElementById("combien").value = "";
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             const params = getParamsFromURL();
             for (const key in params) {
@@ -55,6 +66,7 @@
                     document.getElementById(key).value = params[key];
                 }
             }
+            toggleCombienField();
         });
     </script>
 </head>
@@ -93,6 +105,7 @@
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
             <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
         <label for="mention">La Région a-t-elle été mentionnée lors des interviews ?</label>
@@ -104,10 +117,11 @@
         </select><br><br>
         
         <label for="places">Avez-vous prévu des places de courtoisie ?</label>
-        <select name="places" id="places" required>
+        <select name="places" id="places" required onchange="toggleCombienField()">
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
             <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
         
         <div id="combien-container" class="hidden">
