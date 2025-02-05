@@ -33,9 +33,19 @@
         }
     </style>
     <script>
-        function getEmailFromURL() {
+        function getParamsFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('email') || ''; 
+            return {
+                email: urlParams.get('email') || '',
+                DateEvent: urlParams.get('DateEvent') || '',
+                logo: urlParams.get('LogoTelecharge') || '',
+                justi: urlParams.get('LogoUtilise') || '',
+                tag_rs: urlParams.get('TagRS') || '',
+                plan_com: urlParams.get('PlanComEnvoye') || '',
+                mention: urlParams.get('MentionRegion') || '',
+                places: urlParams.get('Places') || '',
+                placesOffertes: urlParams.get('PlacesOffertes') || ''
+            };
         }
 
         function toggleCombienField() {
@@ -45,63 +55,35 @@
                 combienField.classList.remove("hidden");
             } else {
                 combienField.classList.add("hidden");
-                document.getElementById("combien").value = ""; 
+                document.getElementById("combien").value = "";
             }
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("email").value = getEmailFromURL();
-
-            document.getElementById("visibilityForm").addEventListener("submit", function(event) {
-                event.preventDefault(); 
-
-                let formData = {
-                    email: document.getElementById("email").value,
-                    logo: document.getElementById("logo").value,
-                    justificatif: document.getElementById("justi").value,
-                    tag_rs: document.getElementById("tag_rs").value,
-                    plan_com: document.getElementById("plan_com").value,
-                    mention: document.getElementById("mention").value,
-                    places: document.getElementById("places").value,
-                    combien: document.getElementById("combien").value || ""
-                };
-
-                fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Formulaire envoyé avec succès !");
-                    } else {
-                        response.text().then(text => alert("Erreur lors de l'envoi : " + text));
-                    }
-                })
-                .catch(error => {
-                    console.error("Erreur lors de l'envoi :", error);
-                    alert("Erreur lors de l'envoi.");
-                });
-            });
+            const params = getParamsFromURL();
+            document.getElementById("email").value = params.email;
+            document.getElementById("DateEvent").value = params.DateEvent;
+            document.getElementById("logo").value = params.logo;
+            document.getElementById("justi").value = params.justi;
+            document.getElementById("tag_rs").value = params.tag_rs;
+            document.getElementById("plan_com").value = params.plan_com;
+            document.getElementById("mention").value = params.mention;
+            document.getElementById("places").value = params.places;
+            document.getElementById("combien").value = params.placesOffertes;
+            toggleCombienField();
         });
     </script>
 </head>
 <body>
-
     <h2>Formulaire de Visibilité</h2>
-
     <form id="visibilityForm">
         <label for="email">Votre Email :</label>
         <input type="email" name="email" id="email" readonly required><br><br>
 
-        <label for="logo">
-            Avez-vous bien téléchargé tous les 
-    <a href="https://www.iledefrance.fr/logotype-de-la-region-ile-de-france" target="_blank" rel="noopener noreferrer">
-        logos Région Île-de-France
-    </a> et le guide de leur utilisation ?
-        </label>
+        <label for="DateEvent">Date de l'événement :</label>
+        <input type="text" name="DateEvent" id="DateEvent" readonly><br><br>
+
+        <label for="logo">Avez-vous bien téléchargé tous les <a href="https://www.iledefrance.fr/logotype-de-la-region-ile-de-france" target="_blank">logos Région Île-de-France</a> et le guide de leur utilisation ?</label>
         <select name="logo" id="logo" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -109,10 +91,7 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="justi">
-            Avez-vous bien apposé le logo de la Région sur tous vos supports, puis envoyé vos photos et captures d'écran à 
-            <a href="mailto:dominique.ledogar@iledefrance.fr">dominique.ledogar@iledefrance.fr</a> ?
-        </label>
+        <label for="justi">Avez-vous bien apposé le logo de la Région sur tous vos supports et envoyé vos photos à <a href="mailto:dominique.ledogar@iledefrance.fr">dominique.ledogar@iledefrance.fr</a> ?</label>
         <select name="justi" id="justi" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -120,40 +99,7 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="tag_rs">
-            Lors de votre communication via les réseaux sociaux, avez-vous tagué la page de la Région ?
-        </label>
-        <select name="tag_rs" id="tag_rs" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
-        </select><br><br>
-
-        <label for="plan_com">
-            Avez-vous envoyé votre plan de communication à jour à la Région 
-            <a href="mailto:stephanie.lourenco@iledefrance.fr">stephanie.lourenco@iledefrance.fr</a> ?
-        </label>
-        <select name="plan_com" id="plan_com" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
-        </select><br><br>
-
-        <label for="mention">
-            La Région a-t-elle été mentionnée lors des interviews et/ou communiqués que vous avez réalisés ?
-        </label>
-        <select name="mention" id="mention" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Pas encore d'interview">Pas encore d'interview</option>
-        </select><br><br>
-
-        <label for="places">
-            Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ?
-        </label>
+        <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ?</label>
         <select name="places" id="places" required onchange="toggleCombienField()">
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -162,14 +108,11 @@
         </select><br><br>
 
         <div id="combien-container" class="hidden">
-            <label for="combien">
-                Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?
-            </label>
+            <label for="combien">Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?</label>
             <input type="number" name="combien" id="combien" min="0">
         </div><br>
 
         <button type="submit">Envoyer</button>
     </form>
-
 </body>
 </html>
