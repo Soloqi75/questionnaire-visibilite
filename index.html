@@ -39,7 +39,7 @@
                 email: urlParams.get('email') || '',
                 dateEvent: urlParams.get('DateEvent') || '',
                 logo: urlParams.get('LogoTelecharge') || '',
-                justificatif: urlParams.get('LogoUtilise') || '',
+                justi: urlParams.get('LogoUtilise') || '',
                 tag_rs: urlParams.get('TagRS') || '',
                 plan_com: urlParams.get('PlanComEnvoye') || '',
                 mention: urlParams.get('MentionRegion') || '',
@@ -85,7 +85,12 @@
         <input type="hidden" name="dateEvent" id="dateEvent">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
         
-        <label for="logo">Avez-vous téléchargé les logos ?</label>
+                <label for="logo">
+            Avez-vous bien téléchargé tous les 
+    <a href="https://www.iledefrance.fr/logotype-de-la-region-ile-de-france" target="_blank" rel="noopener noreferrer">
+        logos Région Île-de-France
+    </a> et le guide de leur utilisation ?
+        </label>
         <select name="logo" id="logo" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -93,7 +98,10 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="justificatif">Avez-vous utilisé le logo sur vos supports ?</label>
+        <label for="justi">
+            Avez-vous bien apposé le logo de la Région sur tous vos supports, puis envoyé vos photos et captures d'écran à 
+            <a href="mailto:dominique.ledogar@iledefrance.fr">dominique.ledogar@iledefrance.fr</a> ?
+        </label>
         <select name="justi" id="justi" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -101,7 +109,7 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="tag_rs">Avez-vous tagué la Région sur les réseaux sociaux ?</label>
+        <label for="tag_rs">Lors de votre communication via les réseaux sociaux, avez-vous tagué la page de la Région ?</label>
         <select name="tag_rs" id="tag_rs" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -109,7 +117,10 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="plan_com">Le plan de communication a-t-il été envoyé ?</label>
+                <label for="plan_com">
+            Avez-vous envoyé votre plan de communication à jour à la Région 
+            <a href="mailto:stephanie.lourenco@iledefrance.fr">stephanie.lourenco@iledefrance.fr</a> ?
+        </label>
         <select name="plan_com" id="plan_com" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -117,7 +128,7 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="mention">La Région a-t-elle été mentionnée lors des interviews ?</label>
+        <label for="mention">La Région a-t-elle été mentionnée lors des interviews et/ou communiqués que vous avez réalisés ?</label>
         <select name="mention" id="mention" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -126,7 +137,7 @@
         </select><br><br>
         
         <div id="places-container">
-            <label for="places">Avez-vous prévu des places de courtoisie ?</label>
+            <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ?</label>
             <select name="places" id="places" required onchange="toggleCombienField()">
                 <option value="">-- Sélectionner --</option>
                 <option value="Oui">Oui</option>
@@ -135,7 +146,7 @@
             </select><br><br>
         
             <div id="combien-container" class="hidden">
-                <label for="combien">Combien de places ?</label>
+                <label for="combien">Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?</label>
                 <input type="number" name="combien" id="combien" min="0">
             </div><br>
         </div>
