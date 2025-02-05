@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questionnaire Visibilité</title>
+    <title>Région Ile-de-France : Visibilité de votre événement</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,19 +48,27 @@
                 placesOffertes: urlParams.get('PlacesOffertes') || ''
             };
 
-            console.log("Paramètres récupérés :", params); // Vérifie dans la console du navigateur
+            console.log("Paramètres récupérés :", params);
             return params;
         }
 
         function togglePlacesField() {
             var places = document.getElementById("places").value;
+            var placesContainer = document.getElementById("places-container");
             var combienContainer = document.getElementById("combien-container");
 
             if (places === "Non") {
+                placesContainer.classList.add("hidden");
                 combienContainer.classList.add("hidden");
                 document.getElementById("combien").value = "";
             } else {
-                combienContainer.classList.remove("hidden");
+                placesContainer.classList.remove("hidden");
+                if (places === "Oui") {
+                    combienContainer.classList.remove("hidden");
+                } else {
+                    combienContainer.classList.add("hidden");
+                    document.getElementById("combien").value = "";
+                }
             }
         }
 
@@ -77,6 +85,11 @@
             document.getElementById("mention").value = params.mention;
             document.getElementById("places").value = params.places;
             document.getElementById("combien").value = params.placesOffertes;
+
+            // Masquer la question "Avez-vous prévu de mettre des places de courtoisie à la disposition de la Région ?" si la réponse est "Non"
+            if (params.places === "Non") {
+                document.getElementById("places-container").classList.add("hidden");
+            }
 
             togglePlacesField();
 
@@ -119,13 +132,11 @@
 </head>
 <body>
 
-    <h2>Formulaire de Visibilité</h2>
+    <h2>Région Ile-de-France : Visibilité de votre événement</h2>
 
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
-
-        <label for="email">Votre Email :</label>
-        <input type="email" name="email" id="email" readonly required><br><br>
+        <input type="hidden" name="email" id="email">
 
         <label for="logo">Avez-vous bien téléchargé tous les 
             <a href="https://www.iledefrance.fr/logotype-de-la-region-ile-de-france" target="_blank" rel="noopener noreferrer">logos Région Île-de-France</a> et le guide de leur utilisation ?
@@ -165,25 +176,19 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="mention">La Région a-t-elle été mentionnée lors des interviews et/ou communiqués que vous avez réalisés ?</label>
-        <select name="mention" id="mention" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Pas encore d'interview">Pas encore d'interview</option>
-        </select><br><br>
+        <div id="places-container">
+            <label for="places">Avez-vous prévu de mettre des places de courtoisie à la disposition de la Région ?</label>
+            <select name="places" id="places" required onchange="togglePlacesField()">
+                <option value="">-- Sélectionner --</option>
+                <option value="Oui">Oui</option>
+                <option value="Non">Non</option>
+            </select><br><br>
 
-        <label for="places">Avez-vous prévu des places de courtoisie ?</label>
-        <select name="places" id="places" required onchange="togglePlacesField()">
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-        </select><br><br>
-
-        <div id="combien-container" class="hidden">
-            <label for="combien">Combien de places ?</label>
-            <input type="number" name="combien" id="combien" min="0">
-        </div><br>
+            <div id="combien-container" class="hidden">
+                <label for="combien">Combien de places ?</label>
+                <input type="number" name="combien" id="combien" min="0">
+            </div><br>
+        </div>
 
         <button type="submit">Envoyer</button>
     </form>
