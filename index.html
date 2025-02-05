@@ -76,46 +76,46 @@
                 }
             }
             toggleCombienField();
-        });
 
-        document.getElementById("visibilityForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            let formData = {
-                email: document.getElementById("email").value,
-                dateEvent: document.getElementById("dateEvent").value,
-                logo: document.getElementById("logo").value,
-                justificatif: document.getElementById("justificatif").value,
-                tag_rs: document.getElementById("tag_rs").value,
-                plan_com: document.getElementById("plan_com").value,
-                mention: document.getElementById("mention").value,
-                places: document.getElementById("places").value,
-                combien: document.getElementById("combien").value || ""
-            };
-            
-            fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert("Formulaire envoyé avec succès !");
-                } else {
-                    response.text().then(text => alert("Erreur lors de l'envoi : " + text));
-                }
-            })
-            .catch(error => {
-                console.error("Erreur lors de l'envoi :", error);
-                alert("Erreur lors de l'envoi.");
+            document.getElementById("visibilityForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                let formData = {
+                    email: document.getElementById("email").value,
+                    dateEvent: document.getElementById("dateEvent").value,
+                    logo: document.getElementById("logo").value,
+                    justificatif: document.getElementById("justificatif").value,
+                    tag_rs: document.getElementById("tag_rs").value,
+                    plan_com: document.getElementById("plan_com").value,
+                    mention: document.getElementById("mention").value,
+                    places: document.getElementById("places").value,
+                    combien: document.getElementById("combien").value || ""
+                };
+                
+                fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Formulaire envoyé avec succès !");
+                    } else {
+                        response.text().then(text => alert("Erreur lors de l'envoi : " + text));
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'envoi :", error);
+                    alert("Erreur lors de l'envoi.");
+                });
             });
         });
     </script>
 </head>
 <body>
-    <h2>Région Ile-de-France : Visibilité de votre événement RIDF</h2>
+    <h2>Région Ile-de-France : Visibilité de votre événement</h2>
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
@@ -144,7 +144,7 @@
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-                <label for="plan_com">
+        <label for="plan_com">
             Avez-vous envoyé votre plan de communication à jour à la Région 
             <a href="mailto:stephanie.lourenco@iledefrance.fr">stephanie.lourenco@iledefrance.fr</a> ?
         </label>
@@ -162,7 +162,7 @@
             <option value="Non">Non</option>
             <option value="Pas encore d'interview">Pas encore d'interview</option>
         </select><br><br>
-        
+
         <div id="places-container">
             <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ?</label>
             <select name="places" id="places" required onchange="toggleCombienField()">
@@ -171,7 +171,7 @@
                 <option value="Non">Non</option>
                 <option value="Il est encore trop tôt">Il est encore trop tôt</option>
             </select><br><br>
-        
+
             <div id="combien-container" class="hidden">
                 <label for="combien">Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?</label>
                 <input type="number" name="combien" id="combien" min="0">
