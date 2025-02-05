@@ -34,19 +34,29 @@
     </style>
     <script>
         function getParamsFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return {
-                email: urlParams.get('email') || '',
-                dateEvent: urlParams.get('DateEvent') || '',
-                logo: urlParams.get('LogoTelecharge') || '',
-                justificatif: urlParams.get('LogoUtilise') || '',
-                tag_rs: urlParams.get('TagRS') || '',
-                plan_com: urlParams.get('PlanComEnvoye') || '',
-                mention: urlParams.get('MentionRegion') || '',
-                places: urlParams.get('Places') || '',
-                combien: urlParams.get('PlacesOffertes') || ''
-            };
+    const urlParams = new URLSearchParams(window.location.search);
+    let dateEventRaw = urlParams.get('DateEvent') || '';
+    let dateEventFormatted = '';
+
+    if (dateEventRaw) {
+        let parsedDate = new Date(dateEventRaw);
+        if (!isNaN(parsedDate.getTime())) {
+            dateEventFormatted = parsedDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
         }
+    }
+
+    return {
+        email: urlParams.get('email') || '',
+        dateEvent: dateEventFormatted,  // ✅ Utilisation de la date formatée
+        logo: urlParams.get('LogoTelecharge') || '',
+        justificatif: urlParams.get('LogoUtilise') || '',
+        tag_rs: urlParams.get('TagRS') || '',
+        plan_com: urlParams.get('PlanComEnvoye') || '',
+        mention: urlParams.get('MentionRegion') || '',
+        places: urlParams.get('Places') || '',
+        combien: urlParams.get('PlacesOffertes') || ''
+    };
+}
 
         function toggleCombienField() {
             var places = document.getElementById("places").value;
