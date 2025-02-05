@@ -35,8 +35,7 @@
     <script>
         function getParamsFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
-            
-            let params = {
+            return {
                 email: urlParams.get('email') || '',
                 dateEvent: urlParams.get('DateEvent') || '',
                 logo: urlParams.get('LogoTelecharge') || '',
@@ -47,78 +46,15 @@
                 places: urlParams.get('Places') || '',
                 placesOffertes: urlParams.get('PlacesOffertes') || ''
             };
-
-            return params;
-        }
-
-        function togglePlacesField() {
-            var places = document.getElementById("places").value;
-            var combienContainer = document.getElementById("combien-container");
-
-            if (places === "Non" || places === "") {
-                document.getElementById("places-container").classList.add("hidden");
-                combienContainer.classList.add("hidden");
-                document.getElementById("combien").value = "";
-            } else {
-                document.getElementById("places-container").classList.remove("hidden");
-                if (places === "Oui") {
-                    combienContainer.classList.remove("hidden");
-                } else {
-                    combienContainer.classList.add("hidden");
-                    document.getElementById("combien").value = "";
-                }
-            }
         }
 
         document.addEventListener("DOMContentLoaded", function () {
             const params = getParamsFromURL();
-
-            document.getElementById("email").value = params.email;
-            document.getElementById("dateEvent").value = params.dateEvent;
-            document.getElementById("logo").value = params.logo;
-            document.getElementById("justi").value = params.justi;
-            document.getElementById("tag_rs").value = params.tag_rs;
-            document.getElementById("plan_com").value = params.plan_com;
-            document.getElementById("mention").value = params.mention;
-            document.getElementById("places").value = params.places;
-            document.getElementById("combien").value = params.placesOffertes;
-
-            togglePlacesField();
-
-            document.getElementById("visibilityForm").addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                let formData = {
-                    email: document.getElementById("email").value,
-                    dateEvent: document.getElementById("dateEvent").value,
-                    logo: document.getElementById("logo").value,
-                    justificatif: document.getElementById("justi").value,
-                    tag_rs: document.getElementById("tag_rs").value,
-                    plan_com: document.getElementById("plan_com").value,
-                    mention: document.getElementById("mention").value,
-                    places: document.getElementById("places").value,
-                    combien: document.getElementById("combien").value || ""
-                };
-
-                fetch("https://prod-123.westeurope.logic.azure.com:443/workflows/d4203fbb0c1742f0954bb32a0a787cf9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kPnbhDVFnej3e4PeTWlOFPDxI-kNV93jA9Kw2wbEoW0", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Formulaire envoyé avec succès !");
-                    } else {
-                        response.text().then(text => alert("Erreur lors de l'envoi : " + text));
-                    }
-                })
-                .catch(error => {
-                    console.error("Erreur lors de l'envoi :", error);
-                    alert("Erreur lors de l'envoi.");
-                });
-            });
+            for (const key in params) {
+                if (params[key] && document.getElementById(key)) {
+                    document.getElementById(key).value = params[key];
+                }
+            }
         });
     </script>
 </head>
@@ -127,6 +63,48 @@
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
+        
+        <label for="logo">Avez-vous bien téléchargé les logos ?</label>
+        <select name="logo" id="logo" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select><br><br>
+        
+        <label for="justi">Avez-vous utilisé le logo sur vos supports ?</label>
+        <select name="justi" id="justi" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select><br><br>
+        
+        <label for="tag_rs">Avez-vous tagué la Région sur les réseaux sociaux ?</label>
+        <select name="tag_rs" id="tag_rs" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select><br><br>
+        
+        <label for="plan_com">Le plan de communication a-t-il été envoyé ?</label>
+        <select name="plan_com" id="plan_com" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select><br><br>
+        
+        <label for="mention">La Région a-t-elle été mentionnée dans vos communications ?</label>
+        <select name="mention" id="mention" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select><br><br>
+        
+        <label for="places">Avez-vous prévu des places de courtoisie ?</label>
+        <select name="places" id="places" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+        </select><br><br>
         
         <button type="submit">Envoyer</button>
     </form>
