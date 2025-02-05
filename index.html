@@ -50,12 +50,21 @@
 
         function toggleCombienField() {
             var places = document.getElementById("places").value;
+            var placesContainer = document.getElementById("places-container");
             var combienField = document.getElementById("combien-container");
-            if (places === "Oui") {
-                combienField.classList.remove("hidden");
-            } else {
+            
+            if (places === "Non") {
+                placesContainer.classList.add("hidden");
                 combienField.classList.add("hidden");
                 document.getElementById("combien").value = "";
+            } else {
+                placesContainer.classList.remove("hidden");
+                if (places === "Oui") {
+                    combienField.classList.remove("hidden");
+                } else {
+                    combienField.classList.add("hidden");
+                    document.getElementById("combien").value = "";
+                }
             }
         }
 
@@ -116,18 +125,20 @@
             <option value="Pas encore d'interview">Pas encore d'interview</option>
         </select><br><br>
         
-        <label for="places">Avez-vous prévu des places de courtoisie ?</label>
-        <select name="places" id="places" required onchange="toggleCombienField()">
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
-        </select><br><br>
+        <div id="places-container">
+            <label for="places">Avez-vous prévu des places de courtoisie ?</label>
+            <select name="places" id="places" required onchange="toggleCombienField()">
+                <option value="">-- Sélectionner --</option>
+                <option value="Oui">Oui</option>
+                <option value="Non">Non</option>
+                <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+            </select><br><br>
         
-        <div id="combien-container" class="hidden">
-            <label for="combien">Combien de places ?</label>
-            <input type="number" name="combien" id="combien" min="0">
-        </div><br>
+            <div id="combien-container" class="hidden">
+                <label for="combien">Combien de places ?</label>
+                <input type="number" name="combien" id="combien" min="0">
+            </div><br>
+        </div>
 
         <button type="submit">Envoyer</button>
     </form>
