@@ -35,19 +35,18 @@
     <script>
         function getParamsFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
-    let dateEventRaw = urlParams.get('DateEvent') || '';
-    let dateEventFormatted = '';
 
-    if (dateEventRaw) {
-        let parsedDate = new Date(dateEventRaw);
-        if (!isNaN(parsedDate.getTime())) {
-            dateEventFormatted = parsedDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
-        }
-    }
+    // Récupération des paramètres
+    let email = urlParams.get('Email') || '';
+    let dateEvent = urlParams.get('DateEvent') || '';
+
+    // Création de l'ID unique
+    let id = email + dateEvent;
 
     return {
-        email: urlParams.get('Email') || '',
-        dateEvent: urlParams.get('DateEvent') || '',  // ✅ Utilisation de la date formatée
+        id: id,  // ✅ Ajout de l'ID concaténé Email + DateEvent
+        email: email,  
+        dateEvent: dateEvent,  
         logo: urlParams.get('LogoTelecharge') || '',
         justificatif: urlParams.get('LogoUtilise') || '',
         tag_rs: urlParams.get('TagRS') || '',
