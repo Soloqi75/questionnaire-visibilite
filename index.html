@@ -47,13 +47,24 @@
         id: id,  // ✅ Ajout de l'ID concaténé Email + DateEvent
         email: email,  
         dateEvent: dateEvent,  
-        logo: urlParams.get('LogoTelecharge') || '',
-        justificatif: urlParams.get('LogoUtilise') || '',
-        tag_rs: urlParams.get('TagRS') || '',
-        plan_com: urlParams.get('PlanComEnvoye') || '',
-        mention: urlParams.get('MentionRegion') || '',
-        places: urlParams.get('Places') || '',
-        combien: urlParams.get('PlacesOffertes') || ''
+        logo: urlParams.get('LogoTelecharge') === 'Oui' ? 'Oui' : 
+      (['Non', 'ETT', 'NCNI'].includes(urlParams.get('LogoTelecharge')) ? 'Non rempli la dernière fois' : ''),
+
+justificatif: urlParams.get('LogoUtilise') === 'Oui' ? 'Oui' : 
+              (['Non', 'ETT', 'NCNI'].includes(urlParams.get('LogoUtilise')) ? 'Non rempli la dernière fois' : ''),
+
+tag_rs: urlParams.get('TagRS') === 'Oui' ? 'Oui' : 
+        (['Non', 'ETT', 'NCNI'].includes(urlParams.get('TagRS')) ? 'Non rempli la dernière fois' : ''),
+
+plan_com: urlParams.get('PlanComEnvoye') === 'Oui' ? 'Oui' : 
+          (['Non', 'ETT', 'NCNI'].includes(urlParams.get('PlanComEnvoye')) ? 'Non rempli la dernière fois' : ''),
+
+mention: urlParams.get('MentionRegion') === 'Oui' ? 'Oui' : 
+         (['Non', 'ETT', 'NCNI'].includes(urlParams.get('MentionRegion')) ? 'Non rempli la dernière fois' : ''),
+        places: urlParams.get('Places') === 'Oui' ? 'Oui' : 
+        (urlParams.get('Places') === 'Non' ? 'Non' : 
+        (urlParams.get('Places') === 'ETT' ? 'Non rempli la dernière fois' : '')),
+        combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
     };
 }
 
