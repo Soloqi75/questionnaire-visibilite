@@ -112,8 +112,10 @@
                 .then(response => {
                     if (response.ok) {
                         alert("Vos réponses ont été envoyées à la Région, merci pour votre participation.");
+                        window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france";
                     } else {
                         response.text().then(text => alert("Erreur lors de l'envoi : " + text));
+                        window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france";
                     }
                 })
                 .catch(error => {
