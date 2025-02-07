@@ -43,30 +43,41 @@
     // Création de l'ID unique
     let id = email + dateEvent;
 
+    // Fonction pour normaliser les valeurs récupérées
+    function normalizeParam(param) {
+        return param ? param.trim().toLowerCase() : '';
+    }
+
     return {
-        id: id,  // ✅ Ajout de l'ID concaténé Email + DateEvent
+        id: id,  
         email: email,  
         dateEvent: dateEvent,  
-        logo: urlParams.get('LogoTelecharge') === 'Oui' ? 'Oui' : 
-      (['non', 'ett', 'ncni'].includes((urlParams.get('LogoTelecharge') || '').trim().toLowerCase()) ? 'Non rempli la dernière fois' : ''),
 
-justificatif: urlParams.get('LogoUtilise') === 'Oui' ? 'Oui' : 
-              (['non', 'ett', 'ncni'].includes((urlParams.get('LogoUtilise') || '').trim().toLowerCase()) ? 'Non rempli la dernière fois' : ''),
+        logo: normalizeParam(urlParams.get('LogoTelecharge')) === 'oui' ? 'Oui' :
+              normalizeParam(urlParams.get('LogoTelecharge')) === 'non' ? 'Non' :
+              normalizeParam(urlParams.get('LogoTelecharge')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-tag_rs: urlParams.get('TagRS') === 'Oui' ? 'Oui' : 
-        (['non', 'ett', 'ncni'].includes((urlParams.get('TagRS') || '').trim().toLowerCase()) ? 'Non rempli la dernière fois' : ''),
+        justificatif: normalizeParam(urlParams.get('LogoUtilise')) === 'oui' ? 'Oui' :
+                      normalizeParam(urlParams.get('LogoUtilise')) === 'non' ? 'Non' :
+                      normalizeParam(urlParams.get('LogoUtilise')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-plan_com: urlParams.get('PlanComEnvoye') === 'Oui' ? 'Oui' : 
-          (['non', 'ett', 'ncni'].includes((urlParams.get('PlanComEnvoye') || '').trim().toLowerCase()) ? 'Non rempli la dernière fois' : ''),
+        tag_rs: normalizeParam(urlParams.get('TagRS')) === 'oui' ? 'Oui' :
+                normalizeParam(urlParams.get('TagRS')) === 'non' ? 'Non' :
+                normalizeParam(urlParams.get('TagRS')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-mention: urlParams.get('MentionRegion') === 'Oui' ? 'Oui' : 
-         (['non', 'ett', 'ncni'].includes((urlParams.get('MentionRegion') || '').trim().toLowerCase()) ? 'Non rempli la dernière fois' : ''),
+        plan_com: normalizeParam(urlParams.get('PlanComEnvoye')) === 'oui' ? 'Oui' :
+                  normalizeParam(urlParams.get('PlanComEnvoye')) === 'non' ? 'Non' :
+                  normalizeParam(urlParams.get('PlanComEnvoye')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-places: urlParams.get('Places') === 'Oui' ? 'Oui' : 
-        (urlParams.get('Places') === 'Non' ? 'Non' : 
-        (urlParams.get('Places') === 'ETT' ? 'Non rempli la dernière fois' : '')),
+        mention: normalizeParam(urlParams.get('MentionRegion')) === 'oui' ? 'Oui' :
+                 normalizeParam(urlParams.get('MentionRegion')) === 'non' ? 'Non' :
+                 normalizeParam(urlParams.get('MentionRegion')) === 'ncni' ? 'Ni communiqué, ni interview' : '',
 
-combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
+        places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
+                normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
+                normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
     };
 }
 
@@ -141,7 +152,7 @@ combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
     </script>
 </head>
 <body>
-    <h2>Région Ile-de-France : Visibilité de votre événement</h2>
+    <h2>Région Ile-de-France : Visibilité de votre événement RIDF</h2>
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
         <input type="hidden" name="id" id="id">
