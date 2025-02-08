@@ -81,25 +81,17 @@
     };
 }
 
-        function toggleCombienField() {
-            var places = document.getElementById("places").value;
-            var placesContainer = document.getElementById("places-container");
-            var combienField = document.getElementById("combien-container");
-            
-            if (places === "Non") {
-                placesContainer.classList.add("hidden");
-                combienField.classList.add("hidden");
-                document.getElementById("combien").value = "";
-            } else {
-                placesContainer.classList.remove("hidden");
-                if (places === "Oui") {
-                    combienField.classList.remove("hidden");
-                } else {
-                    combienField.classList.add("hidden");
-                    document.getElementById("combien").value = "";
-                }
-            }
-        }
+       function toggleCombienField(preload = false) {
+    var places = document.getElementById("places").value;
+    var combienField = document.getElementById("combien-container");
+
+    // À l'ouverture, masquer si le préremplissage est "Non"
+    if (preload && places === "Non") {
+        combienField.classList.add("hidden");
+    } else {
+        combienField.classList.remove("hidden");
+    }
+}
 
         document.addEventListener("DOMContentLoaded", function() {
             const params = getParamsFromURL();
@@ -152,7 +144,7 @@
     </script>
 </head>
 <body>
-    <h2>Région Ile-de-France : Visibilité de votre événement RIDF</h2>
+    <h2>Région Ile-de-France : Visibilité de votre événement</h2>
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
         <input type="hidden" name="id" id="id">
