@@ -81,25 +81,26 @@
     };
 }
 
-        function toggleCombienField() {
-            var places = document.getElementById("places").value;
-            var placesContainer = document.getElementById("places-container");
-            var combienField = document.getElementById("combien-container");
-            
-            if (places === "Non") {
-                placesContainer.classList.add("hidden");
-                combienField.classList.add("hidden");
-                document.getElementById("combien").value = "";
-            } else {
-                placesContainer.classList.remove("hidden");
-                if (places === "Oui") {
-                    combienField.classList.remove("hidden");
-                } else {
-                    combienField.classList.add("hidden");
-                    document.getElementById("combien").value = "";
-                }
-            }
+        function toggleCombienField(preload = false) {
+    var places = document.getElementById("places").value;
+    var placesContainer = document.getElementById("places-container");
+    var combienField = document.getElementById("combien-container");
+
+    if (preload && places === "Non") {
+        // Si préremplissage = "Non", on masque les deux champs à l'ouverture
+        placesContainer.classList.add("hidden");
+        combienField.classList.add("hidden");
+    } else {
+        // Sinon, on s'assure qu'ils sont visibles après interaction
+        placesContainer.classList.remove("hidden");
+
+        if (places === "Oui") {
+            combienField.classList.remove("hidden");
+        } else {
+            combienField.classList.add("hidden");
         }
+    }
+}
 
         document.addEventListener("DOMContentLoaded", function() {
             const params = getParamsFromURL();
@@ -108,7 +109,7 @@
                     document.getElementById(key).value = params[key];
                 }
             }
-            toggleCombienField();
+            toggleCombienField(true);
 
             document.getElementById("visibilityForm").addEventListener("submit", function(event) {
                 event.preventDefault();
@@ -203,7 +204,7 @@
 
         <div id="places-container">
             <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ?</label>
-            <select name="places" id="places" required onchange="toggleCombienField()">
+            <select name="places" id="places" required onchange="toggleCombienField(false)"> 
                 <option value="">-- Sélectionner --</option>
                 <option value="Oui">Oui</option>
                 <option value="Non">Non</option>
