@@ -51,7 +51,8 @@
     return {
         id: id,  
         email: email,  
-        dateEvent: dateEvent,  
+        dateEvent: dateEvent,
+        objetDossier: urlParams.get('Objet du dossier') || '',
 
         logo: normalizeParam(urlParams.get('LogoTelecharge')) === 'oui' ? 'Oui' :
               normalizeParam(urlParams.get('LogoTelecharge')) === 'non' ? 'Non' :
@@ -109,6 +110,9 @@
                     document.getElementById(key).value = params[key];
                 }
             }
+            if (params.objetDossier && params.dateEvent) {
+                document.getElementById("objetDossier").textContent = `${params.objetDossier} (${params.dateEvent})`;
+            }
             toggleCombienField(true);
 
             document.getElementById("visibilityForm").addEventListener("submit", function(event) {
@@ -154,6 +158,7 @@
 </head>
 <body>
     <h2>Région Ile-de-France : Visibilité de votre événement</h2>
+    <p id="objetDossier" style="font-weight: bold;"></p>
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
         <input type="hidden" name="id" id="id">
