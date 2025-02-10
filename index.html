@@ -52,7 +52,7 @@
         id: id,  
         email: email,  
         dateEvent: dateEvent,
-        objetDossier: urlParams.get('Objet du dossier') || '',
+        objetDossier: urlParams.get('Objet%20du%20dossier') || '',
 
         logo: normalizeParam(urlParams.get('LogoTelecharge')) === 'oui' ? 'Oui' :
               normalizeParam(urlParams.get('LogoTelecharge')) === 'non' ? 'Non' :
@@ -111,7 +111,12 @@
                 }
             }
             if (params.objetDossier && params.dateEvent) {
-                document.getElementById("objetDossier").textContent = `${params.objetDossier} (${params.dateEvent})`;
+                const formattedDate = new Date(params.dateEvent).toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
             }
             toggleCombienField(true);
 
