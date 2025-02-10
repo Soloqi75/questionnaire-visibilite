@@ -111,7 +111,9 @@
                 }
             }
             if (params.objetDossier && params.dateEvent) {
-                const formattedDate = new Date(params.dateEvent).toLocaleDateString('fr-FR', {
+                const baseDate = new Date(1899, 11, 30); // Date de base pour Excel
+                const eventDate = new Date(baseDate.getTime() + params.dateEvent * 86400000); // Ajoute les jours en millisecondes
+                const formattedDate = eventDate.toLocaleDateString('fr-FR', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
