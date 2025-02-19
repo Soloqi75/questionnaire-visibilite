@@ -135,6 +135,7 @@ h2 {
                     day: 'numeric'
                 });
                 document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
+                document.getElementById("objetDossierInput").value = params.objetDossier;
             }
             toggleCombienField(true);
 
@@ -145,6 +146,7 @@ h2 {
                     id: document.getElementById("id").value,  // ✅ Ajout d'id ici
                     email: document.getElementById("email").value,
                     dateEvent: document.getElementById("dateEvent").value,
+                    objetDossier: document.getElementById("objetDossierInput").value, // ✅ Ajouté ici
                     logo: document.getElementById("logo").value,
                     justificatif: document.getElementById("justificatif").value,
                     tag_rs: document.getElementById("tag_rs").value,
@@ -189,6 +191,7 @@ h2 {
     <p id="objetDossier" style="font-weight: bold;"></p>
     <form id="visibilityForm">
         <input type="hidden" name="dateEvent" id="dateEvent">
+        <input type="hidden" name="objetDossier" id="objetDossierInput">
         <input type="hidden" name="id" id="id">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
         
