@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Région Ile-de-France : Visibilité de votre événement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input {
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+        }
+        .hidden {
+            display: none;
+        }
+        .header {
+    display: flex;
+    align-items: center;
+}
+
+h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Ajoute un petit espace entre le texte et le logo */
+}
+
+.logo {
+    height: 60px; /* Ajustez la taille si nécessaire */
+    width: auto;
+    vertical-align: middle; /* Aligne verticalement le logo avec le texte */
+}
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function getParamsFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Récupération des paramètres
+    let email = urlParams.get('Email') || '';
+    let dateEvent = urlParams.get('DateEvent') || '';
+
+    // Création de l'ID unique
+    let id = email + dateEvent;
+
+    // Fonction pour normaliser les valeurs récupérées
+    function normalizeParam(param) {
+        return param ? param.trim().toLowerCase() : '';
+    }
+
+    return {
+        id: id,  
+        email: email,  
+        dateEvent: dateEvent,
+        objetDossier: urlParams.get('Objet_du_dossier') || '',
+
+        logo: normalizeParam(urlParams.get('LogoTelecharge')) === 'oui' ? 'Oui' :
+              normalizeParam(urlParams.get('LogoTelecharge')) === 'non' ? 'Non' :
+              normalizeParam(urlParams.get('LogoTelecharge')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        justificatif: normalizeParam(urlParams.get('LogoUtilise')) === 'oui' ? 'Oui' :
+                      normalizeParam(urlParams.get('LogoUtilise')) === 'non' ? 'Non' :
+                      normalizeParam(urlParams.get('LogoUtilise')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        tag_rs: normalizeParam(urlParams.get('TagRS')) === 'oui' ? 'Oui' :
+                normalizeParam(urlParams.get('TagRS')) === 'non' ? 'Non' :
+                normalizeParam(urlParams.get('TagRS')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        plan_com: normalizeParam(urlParams.get('PlanComEnvoye')) === 'oui' ? 'Oui' :
+                  normalizeParam(urlParams.get('PlanComEnvoye')) === 'non' ? 'Non' :
+                  normalizeParam(urlParams.get('PlanComEnvoye')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        mention: normalizeParam(urlParams.get('MentionRegion')) === 'oui' ? 'Oui' :
+                 normalizeParam(urlParams.get('MentionRegion')) === 'non' ? 'Non' :
+                 normalizeParam(urlParams.get('MentionRegion')) === 'ncni' ? 'Ni communiqué, ni interview' : '',
+
+        places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
+                normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
+                normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
+    };
+}
+
+        function toggleCombienField(preload = false) {
+    var places = document.getElementById("places").value;
+    var placesContainer = document.getElementById("places-container");
+    var combienField = document.getElementById("combien-container");
+
+    if (preload && places === "Non") {
+        // Si préremplissage = "Non", on masque les deux champs à l'ouverture
+        placesContainer.classList.add("hidden");
+        combienField.classList.add("hidden");
+    } else {
+        // Sinon, on s'assure qu'ils sont visibles après interaction
+        placesContainer.classList.remove("hidden");
+
+        if (places === "Oui") {
+            combienField.classList.remove("hidden");
+        } else {
+            combienField.classList.add("hidden");
+        }
+    }
+}
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = getParamsFromURL();
+            for (const key in params) {
+                if (params[key] && document.getElementById(key)) {
+                    document.getElementById(key).value = params[key];
+                }
+            }
+            if (params.objetDossier && params.dateEvent) {
+                const baseDate = new Date(1899, 11, 30); // Date de base pour Excel
+                const eventDate = new Date(baseDate.getTime() + params.dateEvent * 86400000); // Ajoute les jours en millisecondes
+                const formattedDate = eventDate.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
+                document.getElementById("objetDossierInput").value = params.objetDossier;
+            }
+            toggleCombienField(true);
+
+            document.getElementById("visibilityForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                let formData = {
+                    id: document.getElementById("id").value,  // ✅ Ajout d'id ici
+                    email: document.getElementById("email").value,
+                    dateEvent: document.getElementById("dateEvent").value,
+                    objetDossier: document.getElementById("objetDossierInput").value, // ✅ Ajouté ici
+                    logo: document.getElementById("logo").value,
+                    justificatif: document.getElementById("justificatif").value,
+                    tag_rs: document.getElementById("tag_rs").value,
+                    plan_com: document.getElementById("plan_com").value,
+                    mention: document.getElementById("mention").value,
+                    places: document.getElementById("places").value,
+                    combien: document.getElementById("combien").value || ""
+                };
+                
+                fetch("https://prod-111.westeurope.logic.azure.com:443/workflows/4ab2699232ce4d4192722fbc21026772/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Kvpl9lHDyOJ0E1t7RNgCbP_XrYWKxKwC3YP-bbPH5qU", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Vos réponses ont été envoyées à la Région, merci pour votre participation.");
+                        window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france";
+                    } else {
+                        response.text().then(text => alert("Erreur lors de l'envoi : " + text));
+                        window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france";
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'envoi :", error);
+                    alert("Erreur lors de l'envoi.");
+                    window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france"; // 🔴 Ajout de la redirection ici
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h2>Région Ile-de-France : Visibilité de votre événement</h2>
+        <img src="https://raw.githubusercontent.com/Soloqi75/questionnaire-visibilite/main/LOGO_RIDF_2019_COULEUR.png" 
+             alt="Logo Région Île-de-France" 
+             class="logo">
+    </div>
+    <p id="objetDossier" style="font-weight: bold;"></p>
+    <form id="visibilityForm">
+        <input type="hidden" name="dateEvent" id="dateEvent">
+        <input type="hidden" name="objetDossier" id="objetDossierInput">
+        <input type="hidden" name="id" id="id">
+        <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
+        
+        <label for="logo">Avez-vous bien téléchargé tous les <a href="https://www.iledefrance.fr/logotype-de-la-region-ile-de-france" target="_blank" rel="noopener noreferrer">logos Région Île-de-France</a> et le guide de leur utilisation ?</label>
+        <select name="logo" id="logo" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+        </select><br><br>
+
+        <label for="plan_com">
+            Avez-vous envoyé votre plan de communication à jour à la Région 
+            <a href="mailto:stephanie.lourenco@iledefrance.fr">stephanie.lourenco@iledefrance.fr</a> ?
+        </label>
+        <select name="plan_com" id="plan_com" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+        </select><br><br>
+
+        <label for="justificatif">Avez-vous bien apposé le logo de la Région sur tous vos supports, puis envoyé vos photos et captures d'écran à <a href="mailto:visibilite-sport@iledefrance.fr">visibilite-sport@iledefrance.fr</a> ?</label>
+        <select name="justificatif" id="justificatif" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+        </select><br><br>
+
+        <label for="tag_rs">Lors de votre communication via les réseaux sociaux, avez-vous tagué la page de la Région ?</label>
+        <select name="tag_rs" id="tag_rs" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+        </select><br><br>
+
+        <label for="mention">La Région a-t-elle été mentionnée lors des interviews et/ou communiqués que vous avez réalisés ?</label>
+        <select name="mention" id="mention" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Ni communiqué, ni interview">Ni communiqué, ni interview</option>
+        </select><br><br>
+
+        <div id="places-container">
+            <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ? (à envoyer à <a href="mailto:visibilite-sport@iledefrance.fr">visibilite-sport@iledefrance.fr)</a> ?</label>
+            <select name="places" id="places" required onchange="toggleCombienField(false)"> 
+                <option value="">-- Sélectionner --</option>
+                <option value="Oui">Oui</option>
+                <option value="Non">Non</option>
+                <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+            </select><br><br>
+
+            <div id="combien-container" class="hidden">
+                <label for="combien">Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?</label>
+                <input type="number" name="combien" id="combien" min="0">
+            </div><br>
+        </div>
+
+        <button type="submit">Envoyer</button>
+    </form>
+</body>
+</html>
