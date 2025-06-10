@@ -21,21 +21,22 @@
             display: none;
         }
         .header {
-    display: flex;
-    align-items: center;
-}
+            display: flex;
+            align-items: center;
+        }
 
-h2 {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Ajoute un petit espace entre le texte et le logo */
-}
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.logo {
-    height: 60px; /* Ajustez la taille si nécessaire */
-    width: auto;
-    vertical-align: middle; /* Aligne verticalement le logo avec le texte */
-}
+        .logo {
+            height: 60px;
+            width: auto;
+            vertical-align: middle;
+        }
+
         button {
             padding: 10px;
             background-color: #007bff;
@@ -44,90 +45,85 @@ h2 {
             cursor: pointer;
             margin-top: 15px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
     </style>
     <script>
         function getParamsFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
+            const urlParams = new URLSearchParams(window.location.search);
+            let email = urlParams.get('Email') || '';
 
-    // Récupération des paramètres
-    let email = urlParams.get('Email') || '';
-    function excelToDateString(excelSerial) {
-    if (!excelSerial || isNaN(excelSerial)) return '';
-    const baseDate = new Date(1899, 11, 30);
-    const jsDate = new Date(baseDate.getTime() + excelSerial * 86400000);
-    return jsDate.toISOString().split('T')[0]; // yyyy-mm-dd
-}
+            function excelToDateString(excelSerial) {
+                if (!excelSerial || isNaN(excelSerial)) return '';
+                const baseDate = new Date(1899, 11, 30);
+                const jsDate = new Date(baseDate.getTime() + excelSerial * 86400000);
+                return jsDate.toISOString().split('T')[0];
+            }
 
-let dateDeb = excelToDateString(urlParams.get('DateDeb'));
-let dateFin = excelToDateString(urlParams.get('DateFin'));
+            let dateDeb = excelToDateString(urlParams.get('DateDeb'));
+            let dateFin = excelToDateString(urlParams.get('DateFin'));
+            let id = urlParams.get('Id') || '';
 
-    // Création de l'ID unique
-    let id = urlParams.get('Id') || '';
+            function normalizeParam(param) {
+                return param ? param.trim().toLowerCase() : '';
+            }
 
-    // Fonction pour normaliser les valeurs récupérées
-    function normalizeParam(param) {
-        return param ? param.trim().toLowerCase() : '';
-    }
+            return {
+                id: id,
+                email: email,
+                objetDossier: urlParams.get('Objet_du_dossier') || '',
 
-    return {
-        id: id,  
-        email: email,
-        objetDossier: urlParams.get('Objet_du_dossier') || '',
+                okpanb: normalizeParam(urlParams.get('OkPanB')) === 'oui' ? 'Oui' :
+                        normalizeParam(urlParams.get('OkPanB')) === 'non' ? 'Non' :
+                        normalizeParam(urlParams.get('OkPanB')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        okpanb: normalizeParam(urlParams.get('OkPanB')) === 'oui' ? 'Oui' :
-              normalizeParam(urlParams.get('OkPanB')) === 'non' ? 'Non' :
-              normalizeParam(urlParams.get('OkPanB')) === 'ett' ? 'Il est encore trop tôt' : '',
+                okpans: normalizeParam(urlParams.get('OkPanS')) === 'oui' ? 'Oui' :
+                        normalizeParam(urlParams.get('OkPanS')) === 'non' ? 'Non' :
+                        normalizeParam(urlParams.get('OkPanS')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        okpans: normalizeParam(urlParams.get('OkPanS')) === 'oui' ? 'Oui' :
-                      normalizeParam(urlParams.get('OkPanS')) === 'non' ? 'Non' :
-                      normalizeParam(urlParams.get('OkPanS')) === 'ett' ? 'Il est encore trop tôt' : '',
+                okplab: normalizeParam(urlParams.get('OkPlaB')) === 'oui' ? 'Oui' :
+                        normalizeParam(urlParams.get('OkPlaB')) === 'non' ? 'Non' :
+                        normalizeParam(urlParams.get('OkPlaB')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        okplab: normalizeParam(urlParams.get('OkPlaB')) === 'oui' ? 'Oui' :
-                normalizeParam(urlParams.get('OkPlaB')) === 'non' ? 'Non' :
-                normalizeParam(urlParams.get('OkPlaB')) === 'ett' ? 'Il est encore trop tôt' : '',
+                okplas: normalizeParam(urlParams.get('OkPlaS')) === 'oui' ? 'Oui' :
+                        normalizeParam(urlParams.get('OkPlaS')) === 'non' ? 'Non' :
+                        normalizeParam(urlParams.get('OkPlaS')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        okplas: normalizeParam(urlParams.get('OkPlaS')) === 'oui' ? 'Oui' :
-                  normalizeParam(urlParams.get('OkPlaS')) === 'non' ? 'Non' :
-                  normalizeParam(urlParams.get('OkPlaS')) === 'ett' ? 'Il est encore trop tôt' : '',
+                dateDeb: dateDeb,
+                dateFin: dateFin
 
-        dateDeb: dateDeb,
+                // places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
+                //          normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
+                //          normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        dateFin: dateFin
+                // combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
+            };
+        }
 
-        // places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
-             //   normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
-               // normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : ''
+        // function toggleCombienField(preload = false) {
+        //     var places = document.getElementById("places").value;
+        //     var placesContainer = document.getElementById("places-container");
+        //     var combienField = document.getElementById("combien-container");
 
-        // combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : '' -->
-    };
-}
+        //     if (preload && places === "Non") {
+        //         placesContainer.classList.add("hidden");
+        //         combienField.classList.add("hidden");
+        //     } else {
+        //         placesContainer.classList.remove("hidden");
 
-  //      function toggleCombienField(preload = false) {
-    //var places = document.getElementById("places").value;
-    //var placesContainer = document.getElementById("places-container");
-    //var combienField = document.getElementById("combien-container");
-
-    //if (preload && places === "Non") {
-        // Si préremplissage = "Non", on masque les deux champs à l'ouverture
-      //  placesContainer.classList.add("hidden");
-        //combienField.classList.add("hidden");
-    //} else {
-        // Sinon, on s'assure qu'ils sont visibles après interaction
-      //  placesContainer.classList.remove("hidden");
-
-        //if (places === "Oui") {
-          //  combienField.classList.remove("hidden");
-        //} else {
-          //  combienField.classList.add("hidden");
-        //}
-    //}
-//}
+        //         if (places === "Oui") {
+        //             combienField.classList.remove("hidden");
+        //         } else {
+        //             combienField.classList.add("hidden");
+        //         }
+        //     }
+        // }
 
         document.addEventListener("DOMContentLoaded", function() {
             const params = getParamsFromURL();
+
             document.getElementById("email").value = params.email;
             document.getElementById("id").value = params.id;
             document.getElementById("dateDeb").value = params.dateDeb;
@@ -137,36 +133,37 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
             document.getElementById("okpans").value = params.okpans;
             document.getElementById("okplab").value = params.okplab;
             document.getElementById("okplas").value = params.okplas;
-            
+
             if (params.objetDossier && params.dateDeb) {
-    const eventDate = new Date(params.dateDeb); // params.dateDeb est déjà une date ISO ("yyyy-mm-dd")
-    const formattedDate = eventDate.toLocaleDateString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-    document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
-    document.getElementById("objetDossierInput").value = params.objetDossier;
-}
-            //toggleCombienField(true);
+                const eventDate = new Date(params.dateDeb);
+                const formattedDate = eventDate.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
+                document.getElementById("objetDossierInput").value = params.objetDossier;
+            }
+
+            // toggleCombienField(true);
 
             document.getElementById("visibilityForm").addEventListener("submit", function(event) {
                 event.preventDefault();
-                
+
                 let formData = {
-                    id: document.getElementById("id").value,  // ✅ Ajout d'id ici
+                    id: document.getElementById("id").value,
                     email: document.getElementById("email").value,
                     dateDeb: document.getElementById("dateDeb").value,
-                    objetDossier: document.getElementById("objetDossierInput").value, // ✅ Ajouté ici
+                    objetDossier: document.getElementById("objetDossierInput").value,
                     okpanb: document.getElementById("okpanb").value,
                     okpans: document.getElementById("okpans").value,
                     okplab: document.getElementById("okplab").value,
                     okplas: document.getElementById("okplas").value,
-                    dateFin: document.getElementById("dateFin").value,
-                    //places: document.getElementById("places").value,
-                    //combien: document.getElementById("combien").value || ""
+                    dateFin: document.getElementById("dateFin").value
+                    // places: document.getElementById("places").value,
+                    // combien: document.getElementById("combien").value || ""
                 };
-                
+
                 fetch("https://prod-111.westeurope.logic.azure.com:443/workflows/4ab2699232ce4d4192722fbc21026772/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Kvpl9lHDyOJ0E1t7RNgCbP_XrYWKxKwC3YP-bbPH5qU", {
                     method: "POST",
                     headers: {
@@ -186,7 +183,7 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
                 .catch(error => {
                     console.error("Erreur lors de l'envoi :", error);
                     alert("Erreur lors de l'envoi.");
-                    window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france"; // 🔴 Ajout de la redirection ici
+                    window.location.href = "https://www.iledefrance.fr/logotype-de-la-region-ile-de-france";
                 });
             });
         });
@@ -207,7 +204,7 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
 
         <label for="dateDeb">Si la date de début de chantier n'est pas renseignée, pouvez-vous l'indiquer svp ?</label>
         <input type="date" name="dateDeb" id="dateDeb" required>
-        
+
         <label for="okpanb">Avez-vous disposé au bon endroit, le ou les bons panneaux de chantier ? Puis envoyé vos photos à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a> ?</label>
         <select name="okpanb" id="okpanb" required>
             <option value="">-- Sélectionner --</option>
@@ -216,9 +213,7 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="okpans">
-            Remarques éventuelles de la Région (Répondre à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a>)
-        </label>
+        <label for="okpans">Remarques éventuelles de la Région (Répondre à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a>)</label>
         <select name="okpans" id="okpans" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -228,7 +223,7 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
 
         <label for="dateFin">Si la date de fin de chantier n'est pas renseignée, pouvez-vous l'indiquer svp ?</label>
         <input type="date" name="dateFin" id="dateFin" required>
-        
+
         <label for="okplab">Avez-vous disposé au bon endroit, la ou les plaques pérennes ? Puis envoyé vos photos à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a> ?</label>
         <select name="okplab" id="okplab" required>
             <option value="">-- Sélectionner --</option>
@@ -237,9 +232,7 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="okplas">
-            Remarques éventuelles de la Région (Répondre à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a>)
-        </label>
+        <label for="okplas">Remarques éventuelles de la Région (Répondre à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a>)</label>
         <select name="okplas" id="okplas" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
