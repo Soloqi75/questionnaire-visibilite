@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Région Ile-de-France : Visibilité de votre événement</title>
+    <title>Région Ile-de-France : Visibilité de votre équipement</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,7 +57,7 @@ h2 {
     let dateEvent = urlParams.get('DateEvent') || '';
 
     // Création de l'ID unique
-    let id = email + dateEvent;
+    let id = urlParams.get('Id') || '';
 
     // Fonction pour normaliser les valeurs récupérées
     function normalizeParam(param) {
@@ -70,25 +70,25 @@ h2 {
         dateEvent: dateEvent,
         objetDossier: urlParams.get('Objet_du_dossier') || '',
 
-        logo: normalizeParam(urlParams.get('LogoTelecharge')) === 'oui' ? 'Oui' :
-              normalizeParam(urlParams.get('LogoTelecharge')) === 'non' ? 'Non' :
-              normalizeParam(urlParams.get('LogoTelecharge')) === 'ett' ? 'Il est encore trop tôt' : '',
+        okpanb: normalizeParam(urlParams.get('OkPanB')) === 'oui' ? 'Oui' :
+              normalizeParam(urlParams.get('OkPanB')) === 'non' ? 'Non' :
+              normalizeParam(urlParams.get('OkPanB')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        justificatif: normalizeParam(urlParams.get('LogoUtilise')) === 'oui' ? 'Oui' :
-                      normalizeParam(urlParams.get('LogoUtilise')) === 'non' ? 'Non' :
-                      normalizeParam(urlParams.get('LogoUtilise')) === 'ett' ? 'Il est encore trop tôt' : '',
+        okpans: normalizeParam(urlParams.get('OkPanS')) === 'oui' ? 'Oui' :
+                      normalizeParam(urlParams.get('OkPanS')) === 'non' ? 'Non' :
+                      normalizeParam(urlParams.get('OkPanS')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        tag_rs: normalizeParam(urlParams.get('TagRS')) === 'oui' ? 'Oui' :
-                normalizeParam(urlParams.get('TagRS')) === 'non' ? 'Non' :
-                normalizeParam(urlParams.get('TagRS')) === 'ett' ? 'Il est encore trop tôt' : '',
+        okplab: normalizeParam(urlParams.get('OkPlaB')) === 'oui' ? 'Oui' :
+                normalizeParam(urlParams.get('OkPlaB')) === 'non' ? 'Non' :
+                normalizeParam(urlParams.get('OkPlaB')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        plan_com: normalizeParam(urlParams.get('PlanComEnvoye')) === 'oui' ? 'Oui' :
-                  normalizeParam(urlParams.get('PlanComEnvoye')) === 'non' ? 'Non' :
-                  normalizeParam(urlParams.get('PlanComEnvoye')) === 'ett' ? 'Il est encore trop tôt' : '',
+        okplas: normalizeParam(urlParams.get('OkPlaS')) === 'oui' ? 'Oui' :
+                  normalizeParam(urlParams.get('OkPlaS')) === 'non' ? 'Non' :
+                  normalizeParam(urlParams.get('OkPlaS')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        mention: normalizeParam(urlParams.get('MentionRegion')) === 'oui' ? 'Oui' :
-                 normalizeParam(urlParams.get('MentionRegion')) === 'non' ? 'Non' :
-                 normalizeParam(urlParams.get('MentionRegion')) === 'ncni' ? 'Ni communiqué, ni interview' : '',
+        dateFin: normalizeParam(urlParams.get('DateFin')) === 'oui' ? 'Oui' :
+                 normalizeParam(urlParams.get('DateFin')) === 'non' ? 'Non' :
+                 normalizeParam(urlParams.get('DateFin')) === 'ncni' ? 'Ni communiqué, ni interview' : '',
 
         places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
                 normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
