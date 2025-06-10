@@ -79,17 +79,13 @@
                         normalizeParam(urlParams.get('OkPanB')) === 'non' ? 'Non' :
                         normalizeParam(urlParams.get('OkPanB')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-                okpans: normalizeParam(urlParams.get('OkPanS')) === 'oui' ? 'Oui' :
-                        normalizeParam(urlParams.get('OkPanS')) === 'non' ? 'Non' :
-                        normalizeParam(urlParams.get('OkPanS')) === 'ett' ? 'Il est encore trop tôt' : '',
+                okpans: urlParams.get('OkPanS') || '',
 
                 okplab: normalizeParam(urlParams.get('OkPlaB')) === 'oui' ? 'Oui' :
                         normalizeParam(urlParams.get('OkPlaB')) === 'non' ? 'Non' :
                         normalizeParam(urlParams.get('OkPlaB')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-                okplas: normalizeParam(urlParams.get('OkPlaS')) === 'oui' ? 'Oui' :
-                        normalizeParam(urlParams.get('OkPlaS')) === 'non' ? 'Non' :
-                        normalizeParam(urlParams.get('OkPlaS')) === 'ett' ? 'Il est encore trop tôt' : '',
+                okplas: urlParams.get('OkPlaS') || '',
 
                 dateDeb: dateDeb,
                 dateFin: dateFin
