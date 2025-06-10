@@ -54,7 +54,7 @@ h2 {
 
     // Récupération des paramètres
     let email = urlParams.get('Email') || '';
-    let dateEvent = urlParams.get('DateEvent') || '';
+    let dateDeb = urlParams.get('DateDeb') || '';
 
     // Création de l'ID unique
     let id = urlParams.get('Id') || '';
@@ -67,7 +67,7 @@ h2 {
     return {
         id: id,  
         email: email,  
-        dateEvent: dateEvent,
+        dateDeb: dateDeb,
         objetDossier: urlParams.get('Objet_du_dossier') || '',
 
         okpanb: normalizeParam(urlParams.get('OkPanB')) === 'oui' ? 'Oui' :
@@ -85,6 +85,10 @@ h2 {
         okplas: normalizeParam(urlParams.get('OkPlaS')) === 'oui' ? 'Oui' :
                   normalizeParam(urlParams.get('OkPlaS')) === 'non' ? 'Non' :
                   normalizeParam(urlParams.get('OkPlaS')) === 'ett' ? 'Il est encore trop tôt' : '',
+
+        dateDeb: normalizeParam(urlParams.get('DateDeb')) === 'oui' ? 'Oui' :
+                 normalizeParam(urlParams.get('DateDeb')) === 'non' ? 'Non' :
+                 normalizeParam(urlParams.get('DateDeb')) === 'ett' ? 'Il est encore trop tôt' : '',
 
         dateFin: normalizeParam(urlParams.get('DateFin')) === 'oui' ? 'Oui' :
                  normalizeParam(urlParams.get('DateFin')) === 'non' ? 'Non' :
@@ -126,9 +130,9 @@ h2 {
                     document.getElementById(key).value = params[key];
                 }
             }
-            if (params.objetDossier && params.dateEvent) {
+            if (params.objetDossier && params.dateDeb) {
                 const baseDate = new Date(1899, 11, 30); // Date de base pour Excel
-                const eventDate = new Date(baseDate.getTime() + params.dateEvent * 86400000); // Ajoute les jours en millisecondes
+                const eventDate = new Date(baseDate.getTime() + params.dateDeb * 86400000); // Ajoute les jours en millisecondes
                 const formattedDate = eventDate.toLocaleDateString('fr-FR', {
                     year: 'numeric',
                     month: 'long',
@@ -145,13 +149,13 @@ h2 {
                 let formData = {
                     id: document.getElementById("id").value,  // ✅ Ajout d'id ici
                     email: document.getElementById("email").value,
-                    dateEvent: document.getElementById("dateEvent").value,
+                    dateDeb: document.getElementById("dateDeb").value,
                     objetDossier: document.getElementById("objetDossierInput").value, // ✅ Ajouté ici
-                    okpanb: document.getElementById("logo").value,
-                    okpans: document.getElementById("justificatif").value,
-                    okplab: document.getElementById("tag_rs").value,
-                    okplas: document.getElementById("plan_com").value,
-                    dateFin: document.getElementById("mention").value,
+                    okpanb: document.getElementById("okpanb").value,
+                    okpans: document.getElementById("okpans").value,
+                    okplab: document.getElementById("okplab").value,
+                    okplas: document.getElementById("okplas").value,
+                    dateFin: document.getElementById("dateFin").value,
                     //places: document.getElementById("places").value,
                     //combien: document.getElementById("combien").value || ""
                 };
@@ -194,6 +198,14 @@ h2 {
         <input type="hidden" name="objetDossier" id="objetDossierInput">
         <input type="hidden" name="id" id="id">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
+
+        <label for="dateDeb">Si la date de début de chaniter n'est pas renseignée, pouvez-vous l'indiquer svp ?</label>
+        <select name="dateDeb" id="dateDeb" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Ni communiqué, ni interview">Ni communiqué, ni interview</option>
+        </select><br><br>
         
         <label for="okpanb">Avez-vous disposé au bon endroit, le ou les bons panneaux de chantier ? Puis envoyé vos photos à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a> ?</label>
         <select name="okpanb" id="okpanb" required>
@@ -213,6 +225,14 @@ h2 {
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
+        <label for="dateFin">Si la date de fin de chaniter n'est pas renseignée, pouvez-vous l'indiquer svp ?</label>
+        <select name="dateFin" id="dateFin" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+            <option value="Ni communiqué, ni interview">Ni communiqué, ni interview</option>
+        </select><br><br>
+        
         <label for="okplab">Avez-vous disposé au bon endroit, la ou les plaques pérennes ? Puis envoyé vos photos à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a> ?</label>
         <select name="okplab" id="okplab" required>
             <option value="">-- Sélectionner --</option>
@@ -229,14 +249,6 @@ h2 {
             <option value="Oui">Oui</option>
             <option value="Non">Non</option>
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
-        </select><br><br>
-
-        <label for="dateFin">Si la date de fin de chaniter n'est pas renseignée, pouvez-vous l'indiquer svp ?</label>
-        <select name="dateFin" id="dateFin" required>
-            <option value="">-- Sélectionner --</option>
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Ni communiqué, ni interview">Ni communiqué, ni interview</option>
         </select><br><br>
 
         <!-- <div id="places-container">
