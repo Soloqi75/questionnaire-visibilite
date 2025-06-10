@@ -129,22 +129,26 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
 
         document.addEventListener("DOMContentLoaded", function() {
             const params = getParamsFromURL();
-            for (const key in params) {
-                if (params[key] && document.getElementById(key)) {
-                    document.getElementById(key).value = params[key];
-                }
-            }
+            document.getElementById("email").value = params.email;
+            document.getElementById("id").value = params.id;
+            document.getElementById("dateDeb").value = params.dateDeb;
+            document.getElementById("dateFin").value = params.dateFin;
+            document.getElementById("objetDossierInput").value = params.objetDossier;
+            document.getElementById("okpanb").value = params.okpanb;
+            document.getElementById("okpans").value = params.okpans;
+            document.getElementById("okplab").value = params.okplab;
+            document.getElementById("okplas").value = params.okplas;
+            
             if (params.objetDossier && params.dateDeb) {
-                const baseDate = new Date(1899, 11, 30); // Date de base pour Excel
-                const eventDate = new Date(baseDate.getTime() + params.dateDeb * 86400000); // Ajoute les jours en millisecondes
-                const formattedDate = eventDate.toLocaleDateString('fr-FR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
-                document.getElementById("objetDossierInput").value = params.objetDossier;
-            }
+    const eventDate = new Date(params.dateDeb); // params.dateDeb est déjà une date ISO ("yyyy-mm-dd")
+    const formattedDate = eventDate.toLocaleDateString('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    document.getElementById("objetDossier").textContent = `${params.objetDossier} (${formattedDate})`;
+    document.getElementById("objetDossierInput").value = params.objetDossier;
+}
             toggleCombienField(true);
 
             document.getElementById("visibilityForm").addEventListener("submit", function(event) {
@@ -198,7 +202,7 @@ let dateFin = excelToDateString(urlParams.get('DateFin'));
     </div>
     <p id="objetDossier" style="font-weight: bold;"></p>
     <form id="visibilityForm">
-        <input type="hidden" name="objetDossier" id="objetDossierInput">
+        <!-- <input type="hidden" name="objetDossier" id="objetDossierInput"> -->
         <input type="hidden" name="id" id="id">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
 
