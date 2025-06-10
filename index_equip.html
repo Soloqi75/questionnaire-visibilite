@@ -54,7 +54,15 @@ h2 {
 
     // Récupération des paramètres
     let email = urlParams.get('Email') || '';
-    let dateDeb = urlParams.get('DateDeb') || '';
+    function excelToDateString(excelSerial) {
+    if (!excelSerial || isNaN(excelSerial)) return '';
+    const baseDate = new Date(1899, 11, 30);
+    const jsDate = new Date(baseDate.getTime() + excelSerial * 86400000);
+    return jsDate.toISOString().split('T')[0]; // yyyy-mm-dd
+}
+
+let dateDeb = excelToDateString(urlParams.get('DateDeb'));
+let dateFin = excelToDateString(urlParams.get('DateFin'));
 
     // Création de l'ID unique
     let id = urlParams.get('Id') || '';
@@ -86,13 +94,9 @@ h2 {
                   normalizeParam(urlParams.get('OkPlaS')) === 'non' ? 'Non' :
                   normalizeParam(urlParams.get('OkPlaS')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        dateDeb: normalizeParam(urlParams.get('DateDeb')) === 'oui' ? 'Oui' :
-                 normalizeParam(urlParams.get('DateDeb')) === 'non' ? 'Non' :
-                 normalizeParam(urlParams.get('DateDeb')) === 'ett' ? 'Il est encore trop tôt' : '',
+        dateDeb: dateDeb,
 
-        dateFin: normalizeParam(urlParams.get('DateFin')) === 'oui' ? 'Oui' :
-                 normalizeParam(urlParams.get('DateFin')) === 'non' ? 'Non' :
-                 normalizeParam(urlParams.get('DateFin')) === 'ett' ? 'Il est encore trop tôt' : ''
+        dateFin: dateFin
 
         // places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
              //   normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
