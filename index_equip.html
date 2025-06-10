@@ -90,11 +90,11 @@ h2 {
                  normalizeParam(urlParams.get('DateFin')) === 'non' ? 'Non' :
                  normalizeParam(urlParams.get('DateFin')) === 'ncni' ? 'Ni communiqué, ni interview' : '',
 
-        //places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
-          //      normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
-            //    normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
+        // places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
+             //   normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
+               // normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        //combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
+        // combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : '' -->
     };
 }
 
@@ -195,7 +195,7 @@ h2 {
         <input type="hidden" name="id" id="id">
         <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
         
-        <label for="okpanb">Avez-vous disposé au bon endroit, le ou les bons panneaux de chantier ? Puis envoyé vos photos et captures d'écran à <a href="mailto:visibilite-sport@iledefrance.fr">visibilite-sport@iledefrance.fr</a> ?</label>
+        <label for="okpanb">Avez-vous disposé au bon endroit, le ou les bons panneaux de chantier ? Puis envoyé vos photos à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a> ?</label>
         <select name="okpanb" id="okpanb" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -204,8 +204,7 @@ h2 {
         </select><br><br>
 
         <label for="okpans">
-            Remarques éventuelles de la Région :
-           // <a href="mailto:stephanie.lourenco@iledefrance.fr">stephanie.lourenco@iledefrance.fr</a> ?
+            Remarques éventuelles de la Région (Répondre à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a>)
         </label>
         <select name="okpans" id="okpans" required>
             <option value="">-- Sélectionner --</option>
@@ -214,7 +213,7 @@ h2 {
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="okplab">Avez-vous disposé au bon endroit, la ou les plaques pérennes ? Puis envoyé vos photos et captures d'écran à <a href="mailto:visibilite-sport@iledefrance.fr">visibilite-sport@iledefrance.fr</a> ?</label>
+        <label for="okplab">Avez-vous disposé au bon endroit, la ou les plaques pérennes ? Puis envoyé vos photos à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a> ?</label>
         <select name="okplab" id="okplab" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -222,7 +221,9 @@ h2 {
             <option value="Il est encore trop tôt">Il est encore trop tôt</option>
         </select><br><br>
 
-        <label for="okplas">Remarques éventuelles de la Région :</label>
+        <label for="okplas">
+            Remarques éventuelles de la Région (Répondre à <a href="mailto:mathieu.leopold@iledefrance.fr">mathieu.leopold@iledefrance.fr</a>)
+        </label>
         <select name="okplas" id="okplas" required>
             <option value="">-- Sélectionner --</option>
             <option value="Oui">Oui</option>
@@ -238,20 +239,20 @@ h2 {
             <option value="Ni communiqué, ni interview">Ni communiqué, ni interview</option>
         </select><br><br>
 
-        //<div id="places-container">
-          //  <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ? (à envoyer à <a href="mailto:visibilite-sport@iledefrance.fr">visibilite-sport@iledefrance.fr)</a> ?</label>
-            //<select name="places" id="places" required onchange="toggleCombienField(false)"> 
-              //  <option value="">-- Sélectionner --</option>
-                //<option value="Oui">Oui</option>
-                //<option value="Non">Non</option>
-                //<option value="Il est encore trop tôt">Il est encore trop tôt</option>
-            //</select><br><br>
+        <!-- <div id="places-container">
+            <label for="places">Avez-vous prévu de mettre à la disposition de la Région Île-de-France des places de courtoisie pour cet événement ? (à envoyer à <a href="mailto:visibilite-sport@iledefrance.fr">visibilite-sport@iledefrance.fr)</a> ?</label>
+            <select name="places" id="places" required onchange="toggleCombienField(false)"> 
+                <option value="">-- Sélectionner --</option>
+                <option value="Oui">Oui</option>
+                <option value="Non">Non</option>
+                <option value="Il est encore trop tôt">Il est encore trop tôt</option>
+            </select><br><br>
 
-            //<div id="combien-container" class="hidden">
-              //  <label for="combien">Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?</label>
-               // <input type="number" name="combien" id="combien" min="0">
-            //</div><br>
-        //</div>
+            <div id="combien-container" class="hidden">
+                <label for="combien">Combien de places voulez-vous mettre à la disposition de la Région Île-de-France ?</label>
+                <input type="number" name="combien" id="combien" min="0">
+            </div><br>
+        </div> -->
 
         <button type="submit">Envoyer</button>
     </form>
