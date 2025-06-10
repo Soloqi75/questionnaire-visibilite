@@ -90,34 +90,34 @@ h2 {
                  normalizeParam(urlParams.get('DateFin')) === 'non' ? 'Non' :
                  normalizeParam(urlParams.get('DateFin')) === 'ncni' ? 'Ni communiqué, ni interview' : '',
 
-        places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
-                normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
-                normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
+        //places: normalizeParam(urlParams.get('Places')) === 'oui' ? 'Oui' :
+          //      normalizeParam(urlParams.get('Places')) === 'non' ? 'Non' :
+            //    normalizeParam(urlParams.get('Places')) === 'ett' ? 'Il est encore trop tôt' : '',
 
-        combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
+        //combien: urlParams.get('PlacesOffertes') ? urlParams.get('PlacesOffertes') : ''
     };
 }
 
-        function toggleCombienField(preload = false) {
-    var places = document.getElementById("places").value;
-    var placesContainer = document.getElementById("places-container");
-    var combienField = document.getElementById("combien-container");
+  //      function toggleCombienField(preload = false) {
+    //var places = document.getElementById("places").value;
+    //var placesContainer = document.getElementById("places-container");
+    //var combienField = document.getElementById("combien-container");
 
-    if (preload && places === "Non") {
+    //if (preload && places === "Non") {
         // Si préremplissage = "Non", on masque les deux champs à l'ouverture
-        placesContainer.classList.add("hidden");
-        combienField.classList.add("hidden");
-    } else {
+      //  placesContainer.classList.add("hidden");
+        //combienField.classList.add("hidden");
+    //} else {
         // Sinon, on s'assure qu'ils sont visibles après interaction
-        placesContainer.classList.remove("hidden");
+      //  placesContainer.classList.remove("hidden");
 
-        if (places === "Oui") {
-            combienField.classList.remove("hidden");
-        } else {
-            combienField.classList.add("hidden");
-        }
-    }
-}
+        //if (places === "Oui") {
+          //  combienField.classList.remove("hidden");
+        //} else {
+          //  combienField.classList.add("hidden");
+        //}
+    //}
+//}
 
         document.addEventListener("DOMContentLoaded", function() {
             const params = getParamsFromURL();
@@ -147,13 +147,13 @@ h2 {
                     email: document.getElementById("email").value,
                     dateEvent: document.getElementById("dateEvent").value,
                     objetDossier: document.getElementById("objetDossierInput").value, // ✅ Ajouté ici
-                    logo: document.getElementById("logo").value,
-                    justificatif: document.getElementById("justificatif").value,
-                    tag_rs: document.getElementById("tag_rs").value,
-                    plan_com: document.getElementById("plan_com").value,
-                    mention: document.getElementById("mention").value,
-                    places: document.getElementById("places").value,
-                    combien: document.getElementById("combien").value || ""
+                    okpanb: document.getElementById("logo").value,
+                    okpans: document.getElementById("justificatif").value,
+                    okplab: document.getElementById("tag_rs").value,
+                    okplas: document.getElementById("plan_com").value,
+                    dateFin: document.getElementById("mention").value,
+                    //places: document.getElementById("places").value,
+                    //combien: document.getElementById("combien").value || ""
                 };
                 
                 fetch("https://prod-111.westeurope.logic.azure.com:443/workflows/4ab2699232ce4d4192722fbc21026772/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Kvpl9lHDyOJ0E1t7RNgCbP_XrYWKxKwC3YP-bbPH5qU", {
