@@ -56,10 +56,11 @@
             let email = urlParams.get('Email') || '';
 
             function excelToDateString(excelSerial) {
-                if (!excelSerial || isNaN(excelSerial)) return '';
-                const baseDate = new Date(1899, 11, 30);
-                const jsDate = new Date(baseDate.getTime() + excelSerial * 86400000);
-                return jsDate.toISOString().split('T')[0];
+                const serial = Number(excelSerial);
+                if (!serial || isNaN(serial)) return '';
+                    const baseDate = new Date(Date.UTC(1899, 11, 30)); // UTC pour éviter les décalages
+                    const jsDate = new Date(baseDate.getTime() + serial * 86400000);
+                return jsDate.toISOString().split('T')[0]; // yyyy-mm-dd
             }
 
             let dateDeb = excelToDateString(urlParams.get('dateDeb'));
