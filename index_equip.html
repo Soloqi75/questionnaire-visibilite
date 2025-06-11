@@ -62,8 +62,8 @@
                 return jsDate.toISOString().split('T')[0];
             }
 
-            let dateDeb = excelToDateString(urlParams.get('DateDeb'));
-            let dateFin = excelToDateString(urlParams.get('DateFin'));
+            let dateDeb = excelToDateString(urlParams.get('dateDeb'));
+            let dateFin = excelToDateString(urlParams.get('dateFin'));
             let id = urlParams.get('Id') || '';
 
             function normalizeParam(param) {
