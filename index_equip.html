@@ -76,19 +76,19 @@
                 email: email,
                 objetDossier: urlParams.get('Objet_du_dossier') || '',
 
-                //okpanb: normalizeParam(urlParams.get('OkPanB')) === 'oui' ? 'Oui' :
-                  //      normalizeParam(urlParams.get('OkPanB')) === 'non' ? 'Non' :
-                    //    normalizeParam(urlParams.get('OkPanB')) === 'compléter' ? 'Compléter' : '',
+                okpanb: normalizeParam(urlParams.get('OkPanB')) === 'oui' ? 'Oui' :
+                        normalizeParam(urlParams.get('OkPanB')) === 'non' ? 'Non' :
+                        normalizeParam(urlParams.get('OkPanB')) === 'compléter' ? 'Compléter' : '',
 
-                okpanb: urlParams.get('OkPanB') || '',
+                //okpanb: urlParams.get('OkPanB') || '',
 
                 okpans: urlParams.get('OkPanS') || '',
 
-                //okplab: normalizeParam(urlParams.get('OkPlaB')) === 'oui' ? 'Oui' :
-                  //      normalizeParam(urlParams.get('OkPlaB')) === 'non' ? 'Non' :
-                    //    normalizeParam(urlParams.get('OkPlaB')) === 'compléter' ? 'Compléter' : '',
+                okplab: normalizeParam(urlParams.get('OkPlaB')) === 'oui' ? 'Oui' :
+                        normalizeParam(urlParams.get('OkPlaB')) === 'non' ? 'Non' :
+                        normalizeParam(urlParams.get('OkPlaB')) === 'compléter' ? 'Compléter' : '',
 
-                okplab: urlParams.get('OkPlaB') || '',
+                //okplab: urlParams.get('OkPlaB') || '',
 
                 okplas: urlParams.get('OkPlaS') || '',
 
