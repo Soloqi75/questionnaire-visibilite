@@ -192,17 +192,23 @@
 </head>
 <body>
     <div class="header">
-        <h2>Région Ile-de-France : Visibilité de votre équipement Ridf</h2>
+        <h2>Région Ile-de-France : Visibilité de votre équipement</h2>
         <img src="https://raw.githubusercontent.com/Soloqi75/questionnaire-visibilite/main/LOGO_RIDF_2019_COULEUR.png" 
              alt="Logo Région Île-de-France" 
              class="logo">
     </div>
     <p id="objetDossier" style="font-weight: bold;"></p>
     <form id="visibilityForm">
-        <input type="hidden" name="objetDossier" id="objetDossierInput">
-        <input type="hidden" name="id" id="id">
-        <input type="email" name="email" id="email" readonly required style="border: none; background: none; color: black; font-size: 16px; width: 100%;">
+       <!-- Étiquette + champ objetDossier (invisible mais identifiable via label si nécessaire) -->
+<label for="objetDossierInput">Projet :</label>
+<input type="hidden" name="objetDossier" id="objetDossierInput">
 
+<!-- Champ ID (aucun changement demandé ici) -->
+<input type="hidden" name="id" id="id">
+
+<!-- Champ email rendu invisible -->
+<input type="email" name="email" id="email" readonly required 
+       style="display: none;">
         <label for="dateDeb">Si la date de début de chantier est manquante ou invalide, pouvez-vous la compléter svp ?</label>
         <input type="date" name="dateDeb" id="dateDeb" required>
 
